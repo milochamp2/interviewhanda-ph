@@ -1,5 +1,5 @@
 import type { QuestionnaireData, TeaserResult, FullResult, PlanType, SessionState } from "@/types";
-import { mockTeaserResult, mockFullResult, getMockSession } from "./mock-data";
+import { getMockTeaserResult, mockFullResult, getMockSession } from "./mock-data";
 
 // Placeholder API service — replace with real endpoints when backend is ready
 
@@ -8,9 +8,9 @@ export async function createSession(data: QuestionnaireData): Promise<{ sessionI
   return { sessionId: "mock-session-001" };
 }
 
-export async function generateTeaser(sessionId: string): Promise<TeaserResult> {
+export async function generateTeaser(sessionId: string, questionnaire?: Partial<QuestionnaireData>): Promise<TeaserResult> {
   await simulateDelay(1500);
-  return mockTeaserResult;
+  return getMockTeaserResult(questionnaire);
 }
 
 export async function createCheckout(sessionId: string, plan: PlanType): Promise<{ checkoutUrl: string }> {

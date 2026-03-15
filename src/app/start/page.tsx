@@ -56,7 +56,7 @@ export default function StartPage() {
       };
       setQuestionnaire(finalData);
       const { sessionId } = await createSession(finalData as Parameters<typeof createSession>[0]);
-      const teaser = await generateTeaser(sessionId);
+      const teaser = await generateTeaser(sessionId, finalData);
       setTeaser(teaser);
       router.push("/preview");
     } finally {
