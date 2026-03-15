@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { AppProvider } from "@/components/providers";
+import { SmoothScrollProvider } from "@/components/smooth-scroll";
 import "./globals.css";
 
 const inter = Inter({
@@ -23,7 +24,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
+  maximumScale: 5,
+  themeColor: "#4f46e5",
 };
 
 export default function RootLayout({
@@ -33,8 +35,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-sans antialiased`}>
-        <AppProvider>{children}</AppProvider>
+      <body className={`${inter.variable} font-sans antialiased grain-overlay`}>
+        <AppProvider>
+          <SmoothScrollProvider>
+            {children}
+          </SmoothScrollProvider>
+        </AppProvider>
       </body>
     </html>
   );

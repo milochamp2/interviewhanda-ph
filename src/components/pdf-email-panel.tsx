@@ -41,12 +41,12 @@ export function PdfEmailPanel({ sessionId, t, disabled }: PdfEmailPanelProps) {
   }
 
   return (
-    <Card className="border-gray-200 bg-white">
-      <CardContent className="space-y-4 p-5">
+    <Card className="glow-card border-gray-100/80 bg-white">
+      <CardContent className="space-y-4 p-5 sm:p-6">
         <Button
           onClick={handleDownload}
           disabled={disabled || downloading}
-          className="w-full bg-indigo-600 font-medium hover:bg-indigo-700"
+          className="glow-button touch-target w-full rounded-xl bg-indigo-600 font-medium hover:bg-indigo-700"
         >
           {downloading ? (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -56,7 +56,7 @@ export function PdfEmailPanel({ sessionId, t, disabled }: PdfEmailPanelProps) {
           {t.downloadPdf}
         </Button>
 
-        <div className="space-y-2">
+        <div className="space-y-2.5">
           <p className="text-sm font-medium text-gray-700">{t.sendEmail}</p>
           <div className="flex gap-2">
             <Input
@@ -64,19 +64,19 @@ export function PdfEmailPanel({ sessionId, t, disabled }: PdfEmailPanelProps) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder={t.enterEmail}
-              className="h-10 flex-1 rounded-lg border-gray-200 text-sm"
+              className="h-11 flex-1 rounded-xl border-gray-200/80 text-sm focus:border-indigo-300 focus:ring-indigo-200/50"
               disabled={disabled}
             />
             <Button
               onClick={handleSendEmail}
               disabled={disabled || sending || !email || emailSent}
               variant="outline"
-              className="h-10 border-gray-200"
+              className="h-11 rounded-xl border-gray-200/80"
             >
               {sending ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : emailSent ? (
-                <Check className="h-4 w-4 text-green-500" />
+                <Check className="h-4 w-4 text-emerald-500" />
               ) : (
                 <Mail className="h-4 w-4" />
               )}

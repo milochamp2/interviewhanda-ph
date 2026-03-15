@@ -7,6 +7,7 @@ import {
   Share2, TrendingUp, Palette, Code, BookOpen, HeartPulse,
   Calculator, Users, Home, Truck, PlusCircle,
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   headset: Headset,
@@ -36,25 +37,30 @@ interface JobCategoryGridProps {
 
 export function JobCategoryGrid({ selected, onSelect, language, compact }: JobCategoryGridProps) {
   return (
-    <div className={`grid gap-3 ${compact ? "grid-cols-2" : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4"}`}>
-      {JOB_CATEGORIES.map((cat) => {
+    <div className={`grid gap-2.5 ${compact ? "grid-cols-2" : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4"}`}>
+      {JOB_CATEGORIES.map((cat, i) => {
         const Icon = iconMap[cat.icon] || PlusCircle;
         const isSelected = selected === cat.id;
         return (
-          <button
+          <motion.button
             key={cat.id}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.02, duration: 0.3 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => onSelect(cat.id)}
-            className={`flex items-center gap-3 rounded-xl border p-3 text-left text-sm font-medium transition-all ${
-              compact ? "p-2.5" : "p-3 sm:p-4"
+            className={`touch-target flex items-center gap-3 rounded-xl border text-left text-sm font-medium transition-all ${
+              compact ? "p-3" : "p-3.5 sm:p-4"
             } ${
               isSelected
-                ? "border-indigo-600 bg-indigo-50 text-indigo-700 shadow-sm"
-                : "border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:shadow-sm"
+                ? "glow-card border-indigo-500/50 bg-indigo-50 text-indigo-700"
+                : "border-gray-200/60 bg-white text-gray-700 hover:border-gray-300/80"
             }`}
           >
-            <Icon className={`h-5 w-5 flex-shrink-0 ${isSelected ? "text-indigo-600" : "text-gray-400"}`} />
+            <Icon className={`h-5 w-5 flex-shrink-0 transition-colors ${isSelected ? "text-indigo-600" : "text-gray-400"}`} />
             <span className="leading-tight">{cat.label[language]}</span>
-          </button>
+          </motion.button>
         );
       })}
     </div>

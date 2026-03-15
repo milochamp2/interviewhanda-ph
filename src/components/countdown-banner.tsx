@@ -22,19 +22,19 @@ export function CountdownBanner({ expiresAt, severity, t }: CountdownBannerProps
       : `${diffHours} ${t.hoursLeft}`;
 
   const styles = {
-    subtle: "border-amber-200 bg-amber-50 text-amber-700",
-    warning: "border-orange-300 bg-orange-50 text-orange-700",
-    urgent: "border-red-300 bg-red-50 text-red-700",
+    subtle: "border-amber-200/60 bg-gradient-to-r from-amber-50/80 to-yellow-50/40 text-amber-700",
+    warning: "border-orange-200/60 bg-gradient-to-r from-orange-50/80 to-amber-50/40 text-orange-700",
+    urgent: "border-red-200/60 bg-gradient-to-r from-red-50/80 to-rose-50/40 text-red-700",
   };
 
   const Icon = severity === "urgent" ? AlertTriangle : Clock;
 
   return (
-    <div className={`flex items-center gap-3 rounded-xl border px-4 py-3 ${styles[severity]}`}>
-      <Icon className="h-5 w-5 flex-shrink-0" />
+    <div className={`flex items-center gap-3 rounded-xl border px-4 py-3.5 ${styles[severity]}`}>
+      <Icon className={`h-5 w-5 flex-shrink-0 ${severity === "urgent" ? "animate-pulse" : ""}`} />
       <div className="flex-1">
         <p className="text-sm font-medium">{t.accessExpiring}</p>
-        <p className="text-xs opacity-80">{timeLabel}</p>
+        <p className="text-xs opacity-75">{timeLabel}</p>
       </div>
     </div>
   );

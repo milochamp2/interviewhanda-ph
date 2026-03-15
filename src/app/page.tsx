@@ -15,11 +15,11 @@ export default function LandingPage() {
   const t = getTranslations(language);
 
   return (
-    <div className="min-h-screen bg-white">
-      <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/80 backdrop-blur-md">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-          <span className="text-base font-bold text-gray-900">
-            Interview<span className="text-indigo-600">Handa</span>
+    <div className="min-h-screen bg-[var(--background)]">
+      <header className="glass sticky top-0 z-50 border-b border-gray-100/50">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3 sm:py-3.5">
+          <span className="text-base font-bold tracking-tight text-gray-900">
+            Interview<span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">Handa</span>
           </span>
           <LanguageSelector />
         </div>

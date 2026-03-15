@@ -9,10 +9,10 @@ interface TeaserQuestionCardProps {
 
 export function TeaserQuestionCard({ index, question }: TeaserQuestionCardProps) {
   return (
-    <Card className="border-gray-200 bg-white">
-      <CardContent className="p-4">
+    <Card className="glow-card border-gray-100/80 bg-white">
+      <CardContent className="p-4 sm:p-5">
         <div className="flex gap-3">
-          <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 text-sm font-semibold text-indigo-700">
+          <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-100 to-indigo-50 text-sm font-semibold text-indigo-700">
             {index}
           </span>
           <p className="text-sm leading-relaxed text-gray-700">{question}</p>
