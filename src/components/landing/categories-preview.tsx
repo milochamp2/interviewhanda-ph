@@ -17,13 +17,13 @@ export function CategoriesPreview({ t, language }: CategoriesPreviewProps) {
   const featured = JOB_CATEGORIES.slice(0, 8);
 
   return (
-    <section id="categories" className="luminous-bg relative bg-gray-50/30 px-4 py-20 sm:px-6 sm:py-24">
+    <section id="categories" className="luminous-bg relative bg-gray-50/30 px-4 py-20 dark:bg-white/[0.02] sm:px-6 sm:py-24">
       <div className="mx-auto max-w-4xl">
         <FadeUp>
-          <h2 className="mb-2 text-center text-2xl font-bold text-gray-900 sm:text-3xl">
+          <h2 className="mb-2 text-center text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">
             {t.title}
           </h2>
-          <p className="mb-10 text-center text-sm text-gray-500">{t.subtitle}</p>
+          <p className="mb-10 text-center text-sm text-gray-500 dark:text-gray-400">{t.subtitle}</p>
         </FadeUp>
 
         <StaggerGroup className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -32,7 +32,7 @@ export function CategoriesPreview({ t, language }: CategoriesPreviewProps) {
               <motion.div
                 whileHover={{ y: -3, scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                className="glow-card cursor-default rounded-xl border border-gray-100/80 bg-white px-4 py-3.5 text-center text-sm font-medium text-gray-700"
+                className="glow-card cursor-default rounded-xl border border-gray-100/80 bg-white px-4 py-3.5 text-center text-sm font-medium text-gray-700 dark:border-white/10 dark:bg-white/5 dark:text-gray-300"
               >
                 {cat.label[language]}
               </motion.div>

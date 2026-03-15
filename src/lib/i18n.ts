@@ -129,18 +129,13 @@ const translations = {
     success: {
       title: "Your Interview Prep Kit is Ready!",
       subtitle: "Here's everything you need to ace your interview.",
-      tabs: {
-        questions: "Interview Questions",
-        tips: "Tips & Traps",
-        resume: "Resume",
-        coverLetter: "Cover Letter",
-        salary: "Salary Script",
-        practiceGuide: "Practice Guide",
-      },
       downloadPdf: "Download PDF",
       sendEmail: "Send to Email",
       enterEmail: "Enter your email address",
       send: "Send",
+      driveTitle: "Access Your Full Prep Kit",
+      driveSubtitle: "Your complete interview preparation materials are ready in Google Drive. Access them anytime within your plan duration.",
+      openDrive: "Open in Google Drive",
     },
     expiry: {
       daysLeft: "days left",
@@ -295,18 +290,13 @@ const translations = {
     success: {
       title: "Handa na ang Interview Prep Kit Mo!",
       subtitle: "Narito ang lahat ng kailangan mo para ipasa ang interview.",
-      tabs: {
-        questions: "Mga Tanong sa Interview",
-        tips: "Tips at Traps",
-        resume: "Resume",
-        coverLetter: "Cover Letter",
-        salary: "Salary Script",
-        practiceGuide: "Practice Guide",
-      },
       downloadPdf: "I-download ang PDF",
       sendEmail: "Ipadala sa Email",
       enterEmail: "Ilagay ang email address mo",
       send: "Ipadala",
+      driveTitle: "I-access ang Buong Prep Kit Mo",
+      driveSubtitle: "Handa na ang mga interview preparation materials mo sa Google Drive. I-access ito kahit kailan sa loob ng plan duration mo.",
+      openDrive: "Buksan sa Google Drive",
     },
     expiry: {
       daysLeft: "araw na lang",

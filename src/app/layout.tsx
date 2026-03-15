@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { AppProvider } from "@/components/providers";
+import { ThemeProvider } from "@/components/theme-provider";
 import { SmoothScrollProvider } from "@/components/smooth-scroll";
 import "./globals.css";
 
@@ -34,13 +35,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased grain-overlay`}>
-        <AppProvider>
-          <SmoothScrollProvider>
-            {children}
-          </SmoothScrollProvider>
-        </AppProvider>
+        <ThemeProvider>
+          <AppProvider>
+            <SmoothScrollProvider>
+              {children}
+            </SmoothScrollProvider>
+          </AppProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

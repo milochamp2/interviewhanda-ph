@@ -7,13 +7,13 @@ export function LanguageSelector() {
   const { language, setLanguage } = useAppState();
 
   return (
-    <div className="flex items-center gap-1 rounded-full border border-gray-200/60 bg-white/80 p-0.5 text-sm backdrop-blur-sm">
+    <div className="flex items-center gap-1 rounded-full border border-gray-200/60 bg-white/80 p-0.5 text-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/10">
       <button
         onClick={() => setLanguage("en")}
         className={`rounded-full px-3 py-1 font-medium transition-all duration-200 ${
           language === "en"
             ? "bg-gradient-to-r from-indigo-600 to-indigo-500 text-white shadow-sm"
-            : "text-gray-500 hover:text-gray-700"
+            : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
         }`}
       >
         EN
@@ -23,7 +23,7 @@ export function LanguageSelector() {
         className={`rounded-full px-3 py-1 font-medium transition-all duration-200 ${
           language === "tl"
             ? "bg-gradient-to-r from-indigo-600 to-indigo-500 text-white shadow-sm"
-            : "text-gray-500 hover:text-gray-700"
+            : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
         }`}
       >
         TL

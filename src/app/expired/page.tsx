@@ -32,9 +32,9 @@ export default function ExpiredPage() {
 
   return (
     <div className="luminous-bg min-h-screen bg-[var(--background)]">
-      <header className="glass border-b border-gray-100/50 px-4 py-3">
+      <header className="glass border-b border-gray-100/50 dark:border-white/10 px-4 py-3">
         <div className="mx-auto flex max-w-2xl items-center">
-          <span className="text-base font-bold tracking-tight text-gray-900">
+          <span className="text-base font-bold tracking-tight text-gray-900 dark:text-gray-100">
             Interview<span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">Handa</span>
           </span>
         </div>
@@ -61,29 +61,29 @@ export default function ExpiredPage() {
               transition={{ type: "spring", stiffness: 200, damping: 15 }}
             >
               {isExpired ? (
-                <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-red-100 to-red-50">
+                <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-red-100 to-red-50 dark:from-red-900/40 dark:to-red-900/20">
                   <ShieldAlert className="h-8 w-8 text-red-400" />
                 </div>
               ) : (
-                <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-100 to-amber-50">
+                <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-100 to-amber-50 dark:from-amber-900/40 dark:to-amber-900/20">
                   <Clock className="h-8 w-8 text-amber-400" />
                 </div>
               )}
             </motion.div>
-            <h1 className="mb-2 text-2xl font-bold text-gray-900">
+            <h1 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
               {isExpired ? t.expiry.accessExpired : t.expiry.accessExpiring}
             </h1>
             {isGrace && (
-              <p className="text-sm text-gray-500">{t.expiry.graceMessage}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{t.expiry.graceMessage}</p>
             )}
           </div>
         </FadeUp>
 
         {isGrace && (
           <FadeUp delay={0.1}>
-            <Card className="mb-6 border-gray-100/80 bg-white">
+            <Card className="mb-6 border-gray-100/80 bg-white dark:border-white/10 dark:bg-white/5">
               <CardContent className="p-5">
-                <p className="text-center text-sm text-gray-500">
+                <p className="text-center text-sm text-gray-500 dark:text-gray-400">
                   {language === "en"
                     ? "Your content is still viewable below. Downloads and email are disabled during the grace period."
                     : "Pwede mo pa ring tingnan ang content mo sa ibaba. Naka-disable ang downloads at email sa grace period."}

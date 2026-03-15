@@ -12,10 +12,10 @@ interface FooterProps {
 
 export function Footer({ t }: FooterProps) {
   return (
-    <footer className="luminous-bg relative border-t border-gray-100/50">
+    <footer className="luminous-bg relative border-t border-gray-100/50 dark:border-white/10">
       <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 sm:py-20">
         <FadeUp>
-          <h2 className="mb-5 text-xl font-bold text-gray-900 sm:text-2xl">{t.cta}</h2>
+          <h2 className="mb-5 text-xl font-bold text-gray-900 dark:text-white sm:text-2xl">{t.cta}</h2>
         </FadeUp>
         <FadeUp delay={0.1}>
           <Link href="/start">
@@ -29,7 +29,7 @@ export function Footer({ t }: FooterProps) {
           </Link>
         </FadeUp>
       </div>
-      <div className="border-t border-gray-100/50 py-6 text-center text-xs text-gray-400">
+      <div className="border-t border-gray-100/50 py-6 text-center text-xs text-gray-400 dark:border-white/10 dark:text-gray-500">
         &copy; {new Date().getFullYear()} {t.copyright}
       </div>
     </footer>

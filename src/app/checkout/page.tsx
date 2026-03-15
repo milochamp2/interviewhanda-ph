@@ -35,9 +35,9 @@ export default function CheckoutPage() {
 
   return (
     <div className="luminous-bg min-h-screen bg-[var(--background)]">
-      <header className="glass border-b border-gray-100/50 px-4 py-3">
+      <header className="glass border-b border-gray-100/50 dark:border-white/10 px-4 py-3">
         <div className="mx-auto flex max-w-2xl items-center">
-          <span className="text-base font-bold tracking-tight text-gray-900">
+          <span className="text-base font-bold tracking-tight text-gray-900 dark:text-gray-100">
             Interview<span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">Handa</span>
           </span>
         </div>
@@ -45,17 +45,17 @@ export default function CheckoutPage() {
 
       <div className="mx-auto max-w-2xl px-4 py-8 sm:py-10">
         <FadeUp>
-          <h1 className="mb-7 text-2xl font-bold text-gray-900 sm:text-3xl">{t.checkout.title}</h1>
+          <h1 className="mb-7 text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">{t.checkout.title}</h1>
         </FadeUp>
 
         <FadeUp delay={0.1}>
-          <Card className="mb-6 border-indigo-200/60 bg-gradient-to-r from-indigo-50/60 to-violet-50/30">
+          <Card className="mb-6 border-indigo-200/60 bg-gradient-to-r from-indigo-50/60 to-violet-50/30 dark:border-indigo-500/20 dark:from-indigo-950/30 dark:to-violet-950/10">
             <CardContent className="flex items-center justify-between p-5">
               <div>
-                <Label htmlFor="bundle-toggle" className="text-sm font-semibold text-gray-900">
+                <Label htmlFor="bundle-toggle" className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                   {t.checkout.upgradeToggle}
                 </Label>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-gray-500 dark:text-gray-400">
                   {t.checkout.bundlePrice} {language === "en" ? "total" : "kabuuan"}
                 </p>
               </div>
@@ -70,7 +70,7 @@ export default function CheckoutPage() {
 
         <FadeUp delay={0.15}>
           <div className="mb-6">
-            <h3 className="mb-3 text-sm font-semibold text-gray-700">
+            <h3 className="mb-3 text-sm font-semibold text-gray-700 dark:text-gray-300">
               {t.checkout.comparison.title}
             </h3>
             <div className="glow-card overflow-hidden rounded-xl">
@@ -98,9 +98,9 @@ export default function CheckoutPage() {
             ].map((m) => (
               <div
                 key={m.label}
-                className="flex items-center gap-2 rounded-xl border border-gray-100/80 bg-white px-4 py-2.5 text-xs font-medium text-gray-600 shadow-sm"
+                className="flex items-center gap-2 rounded-xl border border-gray-100/80 bg-white px-4 py-2.5 text-xs font-medium text-gray-600 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-gray-400"
               >
-                <m.icon className="h-3.5 w-3.5 text-indigo-400" />
+                <m.icon className="h-3.5 w-3.5 text-indigo-400 dark:text-indigo-500" />
                 {m.label}
               </div>
             ))}

@@ -41,7 +41,7 @@ export function PdfEmailPanel({ sessionId, t, disabled }: PdfEmailPanelProps) {
   }
 
   return (
-    <Card className="glow-card border-gray-100/80 bg-white">
+    <Card className="glow-card border-gray-100/80 bg-white dark:border-white/10 dark:bg-white/5">
       <CardContent className="space-y-4 p-5 sm:p-6">
         <Button
           onClick={handleDownload}
@@ -57,21 +57,21 @@ export function PdfEmailPanel({ sessionId, t, disabled }: PdfEmailPanelProps) {
         </Button>
 
         <div className="space-y-2.5">
-          <p className="text-sm font-medium text-gray-700">{t.sendEmail}</p>
+          <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{t.sendEmail}</p>
           <div className="flex gap-2">
             <Input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder={t.enterEmail}
-              className="h-11 flex-1 rounded-xl border-gray-200/80 text-sm focus:border-indigo-300 focus:ring-indigo-200/50"
+              className="h-11 flex-1 rounded-xl border-gray-200/80 text-sm focus:border-indigo-300 focus:ring-indigo-200/50 dark:border-white/10 dark:bg-white/5 dark:text-gray-200"
               disabled={disabled}
             />
             <Button
               onClick={handleSendEmail}
               disabled={disabled || sending || !email || emailSent}
               variant="outline"
-              className="h-11 rounded-xl border-gray-200/80"
+              className="h-11 rounded-xl border-gray-200/80 dark:border-white/10"
             >
               {sending ? (
                 <Loader2 className="h-4 w-4 animate-spin" />

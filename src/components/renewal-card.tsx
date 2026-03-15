@@ -14,19 +14,19 @@ interface RenewalCardProps {
 
 export function RenewalCard({ expired, t, onExtend, onRenew, onUpgrade }: RenewalCardProps) {
   return (
-    <Card className="glow-card border-gray-100/80 bg-white">
+    <Card className="glow-card border-gray-100/80 bg-white dark:border-white/10 dark:bg-white/5">
       <CardContent className="space-y-4 p-6">
-        <h3 className="text-lg font-semibold text-gray-900">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
           {expired ? t.accessExpired : t.accessExpiring}
         </h3>
         {expired && (
-          <p className="text-sm text-gray-500">{t.graceMessage}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">{t.graceMessage}</p>
         )}
         <div className="space-y-2.5">
           <Button
             onClick={onExtend}
             variant="outline"
-            className="touch-target w-full justify-center rounded-xl border-gray-200/80 text-sm font-medium"
+            className="touch-target w-full justify-center rounded-xl border-gray-200/80 text-sm font-medium dark:border-white/10 dark:text-gray-300"
           >
             {t.extend7}
           </Button>
@@ -39,7 +39,7 @@ export function RenewalCard({ expired, t, onExtend, onRenew, onUpgrade }: Renewa
           <Button
             onClick={onUpgrade}
             variant="outline"
-            className="touch-target w-full justify-center rounded-xl border-indigo-200/60 text-sm font-medium text-indigo-600 hover:bg-indigo-50"
+            className="touch-target w-full justify-center rounded-xl border-indigo-200/60 text-sm font-medium text-indigo-600 hover:bg-indigo-50 dark:border-indigo-500/30 dark:text-indigo-400 dark:hover:bg-indigo-950/30"
           >
             {t.upgradeBundle}
           </Button>

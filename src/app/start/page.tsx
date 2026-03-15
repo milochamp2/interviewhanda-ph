@@ -66,12 +66,12 @@ export default function StartPage() {
 
   return (
     <div className="luminous-bg min-h-screen bg-[var(--background)]">
-      <header className="glass border-b border-gray-100/50 px-4 py-3">
+      <header className="glass border-b border-gray-100/50 dark:border-white/10 px-4 py-3">
         <div className="mx-auto flex max-w-2xl items-center justify-between">
-          <span className="text-base font-bold tracking-tight text-gray-900">
+          <span className="text-base font-bold tracking-tight text-gray-900 dark:text-gray-100">
             Interview<span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">Handa</span>
           </span>
-          <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-xs font-medium text-indigo-600">
+          <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-xs font-medium text-indigo-600 dark:bg-indigo-950/50 dark:text-indigo-300">
             {step}/{TOTAL_STEPS}
           </span>
         </div>
@@ -92,10 +92,10 @@ export default function StartPage() {
           >
             {step === 1 && (
               <div>
-                <h2 className="mb-1 text-xl font-bold text-gray-900 sm:text-2xl">
+                <h2 className="mb-1 text-xl font-bold text-gray-900 dark:text-white sm:text-2xl">
                   {t.questionnaire.selectCategory}
                 </h2>
-                <p className="mb-6 text-sm text-gray-500">
+                <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
                   {language === "en"
                     ? "Pick the role that best matches your target job."
                     : "Piliin ang role na pinaka-angkop sa target job mo."}
@@ -118,10 +118,10 @@ export default function StartPage() {
 
             {step === 2 && (
               <div>
-                <h2 className="mb-1 text-xl font-bold text-gray-900 sm:text-2xl">
+                <h2 className="mb-1 text-xl font-bold text-gray-900 dark:text-white sm:text-2xl">
                   {t.questionnaire.selectExperience}
                 </h2>
-                <p className="mb-6 text-sm text-gray-500">
+                <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
                   {language === "en"
                     ? "This helps us tailor the difficulty of questions."
                     : "Makakatulong ito para ma-adjust ang level ng mga tanong."}
@@ -137,8 +137,8 @@ export default function StartPage() {
                       }
                       className={`touch-target w-full rounded-xl border p-4 text-left text-base font-medium transition-all sm:p-5 ${
                         experience === level
-                          ? "glow-card border-indigo-500/50 bg-indigo-50 text-indigo-700"
-                          : "border-gray-200/80 bg-white text-gray-700 hover:border-gray-300"
+                          ? "glow-card border-indigo-500/50 bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300 dark:border-indigo-500/30"
+                          : "border-gray-200/80 bg-white text-gray-700 hover:border-gray-300 dark:border-white/10 dark:bg-white/5 dark:text-gray-300 dark:hover:border-white/20"
                       }`}
                     >
                       {t.questionnaire.experienceLevels[level]}
@@ -150,10 +150,10 @@ export default function StartPage() {
 
             {step === 3 && (
               <div>
-                <h2 className="mb-1 text-xl font-bold text-gray-900 sm:text-2xl">
+                <h2 className="mb-1 text-xl font-bold text-gray-900 dark:text-white sm:text-2xl">
                   {t.questionnaire.jobDescription}
                 </h2>
-                <p className="mb-6 text-sm text-gray-500">
+                <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
                   {t.questionnaire.jobDescriptionHint}
                 </p>
                 <Textarea
@@ -166,7 +166,7 @@ export default function StartPage() {
                       ? "Paste the job listing description here..."
                       : "I-paste dito ang job listing description..."
                   }
-                  className="min-h-[180px] rounded-xl border-gray-200/80 bg-white text-base focus:border-indigo-300 focus:ring-indigo-200/50"
+                  className="min-h-[180px] rounded-xl border-gray-200/80 bg-white text-base focus:border-indigo-300 focus:ring-indigo-200/50 dark:border-white/10 dark:bg-white/5 dark:text-gray-200"
                 />
               </div>
             )}
@@ -179,7 +179,7 @@ export default function StartPage() {
             <Button
               variant="outline"
               onClick={() => setStep(step - 1)}
-              className="h-13 flex-1 gap-2 rounded-xl border-gray-200/80 text-sm font-medium"
+              className="h-13 flex-1 gap-2 rounded-xl border-gray-200/80 text-sm font-medium dark:border-white/10 dark:text-gray-300"
             >
               <ArrowLeft className="h-4 w-4" />
               {t.questionnaire.back}

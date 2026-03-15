@@ -22,17 +22,17 @@ export function FaqSection({ title, items }: FaqSectionProps) {
   return (
     <section className="mx-auto w-full max-w-2xl px-4">
       <FadeUp>
-        <h2 className="mb-8 text-center text-2xl font-bold text-gray-900">{title}</h2>
+        <h2 className="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-white">{title}</h2>
       </FadeUp>
       <StaggerGroup className="space-y-2.5">
         {items.map((item, i) => (
           <StaggerItem key={i}>
             <Accordion className="space-y-0">
-              <AccordionItem className="glow-card rounded-xl border border-gray-100/80 bg-white px-5">
-                <AccordionTrigger className="text-left text-sm font-medium text-gray-800 hover:no-underline">
+              <AccordionItem className="glow-card rounded-xl border border-gray-100/80 bg-white px-5 dark:border-white/10 dark:bg-white/5">
+                <AccordionTrigger className="text-left text-sm font-medium text-gray-800 hover:no-underline dark:text-gray-200">
                   {item.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-sm leading-relaxed text-gray-500">
+                <AccordionContent className="text-sm leading-relaxed text-gray-500 dark:text-gray-400">
                   {item.a}
                 </AccordionContent>
               </AccordionItem>

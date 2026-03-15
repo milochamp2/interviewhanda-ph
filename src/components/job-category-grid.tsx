@@ -54,11 +54,11 @@ export function JobCategoryGrid({ selected, onSelect, language, compact }: JobCa
               compact ? "p-3" : "p-3.5 sm:p-4"
             } ${
               isSelected
-                ? "glow-card border-indigo-500/50 bg-indigo-50 text-indigo-700"
-                : "border-gray-200/60 bg-white text-gray-700 hover:border-gray-300/80"
+                ? "glow-card border-indigo-500/50 bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300 dark:border-indigo-500/30"
+                : "border-gray-200/60 bg-white text-gray-700 hover:border-gray-300/80 dark:border-white/10 dark:bg-white/5 dark:text-gray-300 dark:hover:border-white/20"
             }`}
           >
-            <Icon className={`h-5 w-5 flex-shrink-0 transition-colors ${isSelected ? "text-indigo-600" : "text-gray-400"}`} />
+            <Icon className={`h-5 w-5 flex-shrink-0 transition-colors ${isSelected ? "text-indigo-600 dark:text-indigo-400" : "text-gray-400 dark:text-gray-500"}`} />
             <span className="leading-tight">{cat.label[language]}</span>
           </motion.button>
         );
