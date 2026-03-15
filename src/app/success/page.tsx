@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CheckCircle, PartyPopper, FolderOpen } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { CheckCircle, PartyPopper, FolderOpen, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,7 @@ import { FadeUp } from "@/components/motion";
 import type { SessionState } from "@/types";
 
 export default function SuccessPage() {
+  const router = useRouter();
   const { language } = useAppState();
   const t = getTranslations(language);
   const [session, setSession] = useState<SessionState | null>(null);
@@ -119,7 +121,32 @@ export default function SuccessPage() {
           <Card className="glow-card border-gray-100/80 bg-white dark:border-white/10 dark:bg-white/5">
             <CardContent className="flex flex-col items-center p-7 text-center sm:p-8">
               <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-100 to-violet-50 dark:from-indigo-900/40 dark:to-violet-900/20">
-                <FolderOpen className="h-7 w-7 text-indigo-600 dark:text-indigo-400" />
+                <BookOpen className="h-7 w-7 text-indigo-600 dark:text-indigo-400" />
+              </div>
+              <h3 className="mb-1.5 text-lg font-semibold text-gray-900 dark:text-gray-100">
+                {t.success.kitTitle}
+              </h3>
+              <p className="mb-5 text-sm text-gray-500 dark:text-gray-400">
+                {t.success.kitSubtitle}
+              </p>
+              <Button
+                onClick={() => router.push(`/kit?plan=${plan}&status=${status}`)}
+                size="lg"
+                className="glow-button mb-3 w-full rounded-xl bg-indigo-600 text-base font-semibold hover:bg-indigo-700"
+                disabled={isExpired}
+              >
+                <BookOpen className="mr-2 h-4 w-4" />
+                {t.success.viewKit}
+              </Button>
+            </CardContent>
+          </Card>
+        </FadeUp>
+
+        <FadeUp delay={0.25}>
+          <Card className="mt-4 glow-card border-gray-100/80 bg-white dark:border-white/10 dark:bg-white/5">
+            <CardContent className="flex flex-col items-center p-7 text-center sm:p-8">
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-100 to-green-50 dark:from-emerald-900/40 dark:to-green-900/20">
+                <FolderOpen className="h-7 w-7 text-emerald-600 dark:text-emerald-400" />
               </div>
               <h3 className="mb-1.5 text-lg font-semibold text-gray-900 dark:text-gray-100">
                 {t.success.driveTitle}
@@ -130,7 +157,8 @@ export default function SuccessPage() {
               <a href={driveLink} target="_blank" rel="noopener noreferrer">
                 <Button
                   size="lg"
-                  className="glow-button w-full rounded-xl bg-indigo-600 text-base font-semibold hover:bg-indigo-700"
+                  variant="outline"
+                  className="w-full rounded-xl border-gray-200/80 text-base font-semibold dark:border-white/10 dark:text-gray-300"
                   disabled={isExpired}
                 >
                   <FolderOpen className="mr-2 h-4 w-4" />
