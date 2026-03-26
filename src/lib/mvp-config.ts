@@ -24,37 +24,31 @@ export const MESSENGER = {
 } as const;
 
 export const PAYMENT = {
-  /** GCash QR code image path (place in /public) */
   gcashQr: "/images/gcash-qr.png",
-  /** Maya QR code image path (place in /public) */
   mayaQr: "/images/maya-qr.png",
-  /** GCash account name shown below QR */
   gcashName: "InterviewHanda PH",
-  /** Maya account name shown below QR */
   mayaName: "InterviewHanda PH",
-  /** GCash number */
   gcashNumber: "0917-XXX-XXXX",
-  /** Maya number */
   mayaNumber: "0917-XXX-XXXX",
 } as const;
 
 export interface JobCategory {
   id: string;
   label: string;
-  icon: string;
+  emoji: string;
 }
 
 export const JOB_CATEGORIES: JobCategory[] = [
-  { id: "bpo", label: "Customer Service / BPO", icon: "Headset" },
-  { id: "va", label: "Virtual Assistant", icon: "Laptop" },
-  { id: "admin", label: "Admin Assistant", icon: "ClipboardList" },
-  { id: "sales", label: "Sales / Retail", icon: "ShoppingBag" },
-  { id: "service-crew", label: "Service Crew", icon: "UtensilsCrossed" },
-  { id: "nurse", label: "Nurse / Healthcare", icon: "HeartPulse" },
-  { id: "teacher", label: "Teacher / ESL", icon: "BookOpen" },
-  { id: "tech", label: "Tech / Developer", icon: "Code" },
-  { id: "others", label: "Others", icon: "PlusCircle" },
-] as const;
+  { id: "bpo", label: "Customer Service / BPO", emoji: "🎧" },
+  { id: "va", label: "Virtual Assistant", emoji: "💻" },
+  { id: "admin", label: "Admin Assistant", emoji: "📋" },
+  { id: "sales", label: "Sales / Retail", emoji: "🛍️" },
+  { id: "service-crew", label: "Service Crew", emoji: "🍽️" },
+  { id: "nurse", label: "Nurse / Healthcare", emoji: "🏥" },
+  { id: "teacher", label: "Teacher / ESL", emoji: "📚" },
+  { id: "tech", label: "Tech / Developer", emoji: "⚙️" },
+  { id: "others", label: "Others", emoji: "✨" },
+];
 
 export const TEASER_QUESTIONS: { question: string; locked?: boolean }[] = [
   { question: "Tell me about yourself." },
@@ -72,14 +66,50 @@ export const TEASER_QUESTIONS: { question: string; locked?: boolean }[] = [
   { question: "Why did you leave your last job?", locked: true },
 ];
 
-export const WHATS_INSIDE = [
-  "15 tailored interview questions & strong sample answers",
-  "Recruiter traps to watch out for",
-  "Interview tips specific to your job category",
-  "Resume improvement suggestions",
-  "Cover letter template",
-  "Salary negotiation script",
-  "7-day practice guide",
+export const KIT_CONTENTS = [
+  {
+    emoji: "💬",
+    title: "15 Tailored Questions & Answers",
+    description: "Real questions Filipino employers ask, with strong sample answers.",
+  },
+  {
+    emoji: "⚠️",
+    title: "Recruiter Traps",
+    description: "Know the trick questions and how to dodge them gracefully.",
+  },
+  {
+    emoji: "🎯",
+    title: "Job-Specific Tips",
+    description: "Interview tips tailored to your exact job category.",
+  },
+  {
+    emoji: "📄",
+    title: "Resume Suggestions",
+    description: "Quick improvements to make your resume stand out.",
+  },
+  {
+    emoji: "✉️",
+    title: "Cover Letter Template",
+    description: "A ready-to-customize template that gets attention.",
+  },
+  {
+    emoji: "💰",
+    title: "Salary Negotiation Script",
+    description: "Know what to say when they ask about your expected salary.",
+  },
+  {
+    emoji: "📅",
+    title: "7-Day Practice Guide",
+    description: "A structured plan so you're fully ready by interview day.",
+  },
+] as const;
+
+export const PRICE_FEATURES = [
+  "15 tailored interview questions & answers",
+  "Recruiter traps & job-specific tips",
+  "Resume, cover letter & salary scripts",
+  "7-day structured practice guide",
+  "Instant delivery via Google Drive",
 ] as const;
 
 export const TRUST_ITEMS = [
@@ -104,6 +134,15 @@ export const TESTIMONIALS = [
     role: "Nurse",
     text: "Nag-review lang ako ng 2 days tapos pumasa agad. Salamat!",
   },
+] as const;
+
+export const PAYMENT_BADGES = [
+  { emoji: "🟢", label: "GCash" },
+  { emoji: "🟣", label: "Maya" },
+  { emoji: "🔒", label: "Secure Payment" },
+  { emoji: "⚡", label: "Instant Delivery" },
+  { emoji: "📁", label: "Google Drive" },
+  { emoji: "💬", label: "Messenger" },
 ] as const;
 
 export const FAQ_ITEMS = [
