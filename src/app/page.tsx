@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight, ChevronDown, Check } from "lucide-react";
 import {
   SITE,
   PRICE,
+  MESSENGER,
   JOB_CATEGORIES,
-  TEASER_QUESTIONS,
   KIT_CONTENTS,
   PRICE_FEATURES,
   TRUST_ITEMS,
@@ -20,51 +20,58 @@ import {
 export default function LandingPage() {
   const [selectedJob, setSelectedJob] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [showSticky, setShowSticky] = useState(false);
 
   // Scroll reveal
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry, i) => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setTimeout(() => entry.target.classList.add("visible"), i * 60);
+            entry.target.classList.add("visible");
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+      { threshold: 0.1, rootMargin: "0px 0px -30px 0px" }
     );
-    document.querySelectorAll(".anim-up").forEach((el) => observer.observe(el));
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 
-  // Nav scroll effect
-  const [scrolled, setScrolled] = useState(false);
+  // Sticky mobile CTA — show after scrolling past hero
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const hero = document.getElementById("hero");
+    if (!hero) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setShowSticky(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+    obs.observe(hero);
+    return () => obs.disconnect();
   }, []);
 
-  const ctaHref = selectedJob ? `/pay?job=${selectedJob}` : "#categories";
+  const selectedLabel = JOB_CATEGORIES.find((c) => c.id === selectedJob)?.label;
+  const messengerHref = selectedLabel
+    ? `${MESSENGER.url}?text=${encodeURIComponent(MESSENGER.prefill(selectedLabel))}`
+    : MESSENGER.url;
 
   return (
     <div className="min-h-screen bg-[var(--bg)]">
+      {/* ═══ STICKY TOP BAR ═══ */}
+      <div className="fixed top-0 left-0 right-0 z-[100] bg-[var(--green)] px-5 py-2.5 text-center text-[0.82rem] font-semibold text-white">
+        🎯 <strong className="font-extrabold">2,400+</strong> kits delivered &nbsp;·&nbsp; <strong className="font-extrabold">93%</strong> got interview callbacks
+      </div>
+
       {/* ═══ NAV ═══ */}
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50 border-b border-[var(--border)] backdrop-blur-[20px] backdrop-saturate-[1.4] transition-all duration-300 ${
-          scrolled
-            ? "bg-[rgba(10,10,15,0.95)] py-3"
-            : "bg-[rgba(10,10,15,0.8)] py-4"
-        }`}
-      >
-        <div className="mx-auto flex max-w-[1120px] items-center justify-between px-6">
-          <a href="#" className="font-[var(--font-display)] text-[1.3rem] font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>
+      <nav className="fixed top-[38px] left-0 right-0 z-[99] border-b border-[var(--border)] bg-[rgba(250,250,247,0.92)] px-5 py-3 backdrop-blur-[16px] backdrop-saturate-[1.5]">
+        <div className="mx-auto flex max-w-[680px] items-center justify-between">
+          <a href="#" className="text-[1.15rem] font-extrabold text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>
             Interview<span className="text-[var(--green)]">Handa</span>
           </a>
           <Link
-            href={ctaHref}
-            className="inline-flex items-center gap-2 rounded-full bg-[var(--green)] px-5 py-2.5 text-sm font-semibold text-[var(--bg)] transition-all hover:bg-[#6ee7a0] hover:-translate-y-0.5 hover:shadow-[0_4px_20px_var(--green-glow)]"
+            href="#categories"
+            className="rounded-full bg-[var(--green)] px-5 py-2 text-[0.82rem] font-bold text-white transition-colors hover:bg-[#15803d]"
           >
             Get Kit — {PRICE.formatted}
           </Link>
@@ -72,232 +79,192 @@ export default function LandingPage() {
       </nav>
 
       {/* ═══ HERO ═══ */}
-      <section className="relative overflow-hidden pt-40 pb-24 md:pb-28" style={{ background: "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(74,222,128,0.06) 0%, transparent 70%)" }}>
-        {/* Glow orb */}
-        <div className="pointer-events-none absolute -top-[200px] -right-[200px] h-[600px] w-[600px]" style={{ background: "radial-gradient(circle, rgba(74,222,128,0.04) 0%, transparent 70%)" }} />
-
-        <div className="mx-auto grid max-w-[1120px] grid-cols-1 items-center gap-10 px-6 md:grid-cols-2 md:gap-16">
-          {/* Hero content */}
-          <div className="relative z-10">
-            {/* Badge */}
-            <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[rgba(74,222,128,0.2)] bg-[var(--green-glow)] px-3.5 py-1.5 text-[0.78rem] font-medium text-[var(--green)]" style={{ animation: "fadeUp 0.6s ease both" }}>
-              <span className="pulse-dot h-2 w-2 rounded-full bg-[var(--green)]" />
-              Trusted by 2,400+ job seekers
-            </div>
-
-            <h1
-              className="mb-5 text-[clamp(2.5rem,5.5vw,3.8rem)] font-extrabold leading-[1.12] text-white"
-              style={{ fontFamily: "var(--font-display)", animation: "fadeUp 0.6s 0.1s ease both" }}
-            >
-              Stop Stressing.
-              <br />
-              Start <em className="shimmer-text not-italic">Preparing.</em>
-            </h1>
-
-            <p className="mb-9 max-w-[480px] text-[1.1rem] leading-[1.75] text-[var(--text-muted)]" style={{ animation: "fadeUp 0.6s 0.2s ease both" }}>
-              Get a personalized interview prep kit for your exact job — tailored questions, expert answers, and tips Filipino employers actually ask.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-4" style={{ animation: "fadeUp 0.6s 0.3s ease both" }}>
-              <Link
-                href={ctaHref}
-                className="inline-flex items-center gap-2.5 rounded-full bg-[var(--green)] px-8 py-4 text-base font-bold text-[var(--bg)] shadow-[0_4px_24px_var(--green-glow)] transition-all hover:bg-[#6ee7a0] hover:-translate-y-0.5 hover:shadow-[0_8px_40px_rgba(74,222,128,0.25)]"
-              >
-                Get Your Kit — {PRICE.formatted}
-                <ArrowRight className="h-[18px] w-[18px]" />
-              </Link>
-              <a
-                href="#preview"
-                className="inline-flex items-center gap-2 rounded-full border border-[var(--border-hover)] bg-transparent px-7 py-4 text-[0.95rem] font-medium text-[var(--text)] transition-all hover:border-[var(--text-muted)] hover:bg-[rgba(255,255,255,0.03)]"
-              >
-                See sample questions
-              </a>
-            </div>
+      <section id="hero" className="px-5 pt-[120px] pb-12 text-center">
+        <div className="mx-auto max-w-[680px]">
+          {/* Trust badge */}
+          <div
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-[rgba(202,138,4,0.15)] bg-[var(--gold-light)] px-4 py-1.5 text-[0.78rem] font-semibold text-[var(--gold)]"
+            style={{ animation: "fadeUp 0.5s ease both" }}
+          >
+            ⭐ 4.9/5 from 2,400+ Filipino job seekers
           </div>
 
-          {/* Hero card */}
-          <div className="relative order-first md:order-last" style={{ animation: "fadeUp 0.8s 0.4s ease both" }}>
-            <div className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-7 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
-              {/* Top gradient line */}
-              <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[var(--green)] via-[var(--blue)] to-[var(--green)]" />
-              <p className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.1em] text-[var(--text-dim)]">
-                Sample from your kit
-              </p>
-              <div className="mb-3.5 rounded-[10px] border-l-[3px] border-[var(--green)] bg-[rgba(255,255,255,0.04)] px-4 py-3.5 text-[1.05rem] font-semibold text-white">
-                &ldquo;Tell me about yourself.&rdquo;
-              </div>
-              <div className="rounded-[10px] border-l-[3px] border-[rgba(74,222,128,0.3)] bg-[rgba(74,222,128,0.04)] px-4 py-3.5 text-[0.92rem] leading-[1.7] text-[var(--text-muted)]">
-                &ldquo;I&rsquo;m a customer service professional with 2 years in BPO. I specialize in handling escalations and maintaining a 95% CSAT score&hellip;&rdquo;
-              </div>
-              <div className="mt-4 flex items-center justify-between border-t border-[var(--border)] pt-4">
-                <span className="text-[0.82rem] font-semibold text-[var(--green)]">14 more questions inside →</span>
-                <div className="flex gap-1">
-                  <span className="h-2 w-2 rounded-full bg-[var(--text-dim)] opacity-50" />
-                  <span className="h-2 w-2 rounded-full bg-[var(--text-dim)] opacity-50" />
-                  <span className="h-2 w-2 rounded-full bg-[var(--text-dim)] opacity-50" />
-                </div>
-              </div>
+          <h1
+            className="mb-4 text-[clamp(2rem,7vw,2.8rem)] font-extrabold leading-[1.15] text-[var(--text)]"
+            style={{ fontFamily: "var(--font-display)", animation: "fadeUp 0.5s 0.1s ease both" }}
+          >
+            Alam mo na ba kung ano{" "}
+            <span className="text-[var(--green)] underline decoration-[rgba(22,163,74,0.3)] underline-offset-4">
+              sasabihin mo
+            </span>{" "}
+            sa interview?
+          </h1>
+
+          <p
+            className="mx-auto mb-7 max-w-[500px] text-[1.05rem] leading-[1.7] text-[var(--text-secondary)]"
+            style={{ animation: "fadeUp 0.5s 0.2s ease both" }}
+          >
+            Get a personalized prep kit with 15 real interview questions, strong sample answers, and tips for your exact job — delivered instantly for just {PRICE.formatted}.
+          </p>
+
+          <div style={{ animation: "fadeUp 0.5s 0.3s ease both" }}>
+            <Link
+              href="#categories"
+              className="inline-flex w-full max-w-[380px] items-center justify-center gap-2.5 rounded-full bg-[var(--green)] px-9 py-4 text-[1.05rem] font-bold text-white shadow-[0_4px_16px_rgba(22,163,74,0.2)] transition-all hover:bg-[#15803d] hover:-translate-y-px hover:shadow-[0_6px_24px_rgba(22,163,74,0.25)]"
+            >
+              Get Your Kit — {PRICE.formatted}
+              <ArrowRight className="h-[18px] w-[18px]" />
+            </Link>
+            <span className="mt-2.5 block text-[0.8rem] text-[var(--text-muted)]">
+              GCash or Maya · <strong className="text-[var(--text-secondary)]">Instant delivery</strong>
+            </span>
+          </div>
+
+          {/* Proof strip */}
+          <div
+            className="mt-8 flex flex-wrap items-center justify-center gap-6 text-[0.82rem] font-medium text-[var(--text-muted)]"
+            style={{ animation: "fadeUp 0.5s 0.4s ease both" }}
+          >
+            <span><strong className="font-bold text-[var(--text)]">2,400+</strong> kits sold</span>
+            <span><span className="tracking-[1px] text-[var(--gold)]">★★★★★</span> <strong className="font-bold text-[var(--text)]">4.9</strong></span>
+            <span><strong className="font-bold text-[var(--text)]">93%</strong> got callbacks</span>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ SAMPLE CARD ═══ */}
+      <section className="px-5 pb-12">
+        <div className="reveal mx-auto max-w-[680px] overflow-hidden rounded-[14px] border border-[var(--border)] bg-[var(--bg-card)] shadow-[var(--shadow)]">
+          <div className="flex items-center justify-between border-b border-[var(--border)] bg-[var(--bg-warm)] px-5 py-3.5">
+            <span className="text-[0.75rem] font-bold uppercase tracking-[0.08em] text-[var(--text-muted)]">Preview from your kit</span>
+            <span className="rounded-full bg-[var(--green-light)] px-2.5 py-0.5 text-[0.7rem] font-bold text-[var(--green)]">Q1 of 15</span>
+          </div>
+          <div className="p-5">
+            <div className="mb-3 rounded-[10px] border-l-[3px] border-[var(--green)] bg-[var(--bg-warm)] px-4 py-3.5 text-[0.95rem] font-bold text-[var(--text)]">
+              &ldquo;Tell me about yourself.&rdquo;
             </div>
-            {/* Floating stats */}
-            <div className="float-anim absolute -top-2.5 -right-5 hidden rounded-[10px] border border-[var(--border)] bg-[var(--bg-card)] px-4 py-3 text-[0.82rem] text-[var(--text)] shadow-[0_10px_30px_rgba(0,0,0,0.3)] md:block">
-              <strong className="font-bold text-[var(--green)]">93%</strong> got callbacks
+            <div className="rounded-[10px] border-l-[3px] border-[rgba(22,163,74,0.25)] bg-[var(--green-bg)] px-4 py-3.5 text-[0.88rem] leading-[1.7] text-[var(--text-secondary)]">
+              &ldquo;I&rsquo;m a customer service professional with 2 years in BPO. I specialize in handling escalations and maintaining a 95% CSAT score&hellip;&rdquo;
             </div>
-            <div className="float-anim-delay absolute -bottom-2 -left-7 hidden rounded-[10px] border border-[var(--border)] bg-[var(--bg-card)] px-4 py-3 text-[0.82rem] text-[var(--text)] shadow-[0_10px_30px_rgba(0,0,0,0.3)] md:block">
-              ⭐ <strong className="font-bold text-[var(--green)]">4.9</strong>/5 rating
+          </div>
+          <div className="flex items-center justify-between border-t border-[var(--border)] bg-[var(--bg-warm)] px-5 py-3.5">
+            <span className="text-[0.82rem] font-bold text-[var(--green)]">14 more questions inside →</span>
+            <div className="flex gap-1">
+              <span className="h-[7px] w-[7px] rounded-full bg-[var(--text-muted)] opacity-30" />
+              <span className="h-[7px] w-[7px] rounded-full bg-[var(--text-muted)] opacity-30" />
+              <span className="h-[7px] w-[7px] rounded-full bg-[var(--text-muted)] opacity-30" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ═══ CATEGORIES ═══ */}
-      <section id="categories" className="py-24 px-6">
-        <div className="mx-auto max-w-[1120px]">
-          <div className="section-label">Choose your role</div>
-          <h2 className="mb-4 text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.2] text-white" style={{ fontFamily: "var(--font-display)" }}>
-            What job are you preparing for?
-          </h2>
-          <p className="mb-10 max-w-[560px] text-[1.05rem] leading-[1.7] text-[var(--text-muted)]">
-            Pick your category. Your kit will be tailored to this role with industry-specific questions and answers.
+      {/* ═══ URGENCY BANNER ═══ */}
+      <section className="reveal border-y border-[rgba(220,38,38,0.08)] bg-[var(--red-light)] px-5 py-9 text-center">
+        <div className="mx-auto max-w-[680px]">
+          <div className="text-[clamp(2.5rem,10vw,4rem)] font-extrabold leading-none text-[var(--red)]" style={{ fontFamily: "var(--font-display)" }}>
+            70%
+          </div>
+          <p className="mx-auto mt-2.5 max-w-[480px] text-base leading-[1.6] text-[var(--text-secondary)]">
+            of candidates lose the job — not because they&rsquo;re unqualified, but because they <strong className="text-[var(--text)]">weren&rsquo;t prepared.</strong>
           </p>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+        </div>
+      </section>
+
+      {/* ═══ CATEGORIES ═══ */}
+      <section id="categories" className="px-5 py-14">
+        <div className="mx-auto max-w-[680px]">
+          <div className="mb-6 text-center">
+            <div className="section-tag">Step 1</div>
+            <h2 className="text-[clamp(1.6rem,5vw,2.2rem)] font-extrabold leading-[1.2] text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>
+              Anong job ang papasukan mo?
+            </h2>
+            <p className="mt-2 text-[0.95rem] text-[var(--text-muted)]">
+              Pick your category. We&rsquo;ll tailor your kit to this role.
+            </p>
+          </div>
+          <div className="grid grid-cols-3 gap-2.5">
             {JOB_CATEGORIES.map((cat) => {
               const isSelected = selectedJob === cat.id;
               return (
                 <button
                   key={cat.id}
                   onClick={() => setSelectedJob(cat.id)}
-                  className={`anim-up group relative overflow-hidden rounded-[10px] border p-5 text-center transition-all duration-300 ${
+                  className={`reveal select-none rounded-[10px] border-2 p-4 text-center transition-all sm:p-5 ${
                     isSelected
-                      ? "border-[var(--green)] bg-[rgba(74,222,128,0.06)] shadow-[0_8px_30px_rgba(74,222,128,0.1)]"
-                      : "border-[var(--border)] bg-[var(--bg-card)] hover:border-[var(--green)] hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(74,222,128,0.1)]"
+                      ? "border-[var(--green)] bg-[var(--green-bg)] shadow-[0_0_0_1px_var(--green)]"
+                      : "border-[var(--border)] bg-[var(--bg-card)] hover:border-[var(--green)] hover:bg-[var(--green-bg)]"
                   }`}
                 >
-                  <span className="relative z-10 mb-2 block text-[1.6rem]">{cat.emoji}</span>
-                  <span className="relative z-10 text-[0.92rem] font-medium text-[var(--text)]">{cat.label}</span>
+                  <span className="mb-1.5 block text-[1.3rem] sm:text-[1.5rem]">{cat.emoji}</span>
+                  <span className="text-[0.72rem] font-semibold leading-tight text-[var(--text-secondary)] sm:text-[0.78rem]">{cat.label}</span>
                 </button>
               );
             })}
           </div>
-          {selectedJob && (
-            <div className="mt-8 text-center" style={{ animation: "fadeUp 0.4s ease both" }}>
-              <Link
-                href={`/pay?job=${selectedJob}`}
-                className="inline-flex items-center gap-2.5 rounded-full bg-[var(--green)] px-8 py-4 text-base font-bold text-[var(--bg)] shadow-[0_4px_24px_var(--green-glow)] transition-all hover:bg-[#6ee7a0] hover:-translate-y-0.5"
-              >
-                Continue — {PRICE.formatted}
-                <ArrowRight className="h-[18px] w-[18px]" />
-              </Link>
-            </div>
-          )}
+
+          {/* Messenger CTA */}
+          <div className="mt-6 text-center">
+            <a
+              href={messengerHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex w-full max-w-[380px] items-center justify-center gap-2.5 rounded-full bg-[var(--blue-messenger)] px-9 py-4 text-base font-bold text-white shadow-[0_4px_16px_rgba(0,132,255,0.2)] transition-all hover:bg-[#0070e0]"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.2 5.42 3.15 7.2V22l2.96-1.63c.84.23 1.72.36 2.65.36h.24c5.64 0 10-4.13 10-9.7S17.64 2 12 2zm1.05 13.07-2.55-2.73L5.5 15.2l5.45-5.78 2.55 2.73 4.94-2.85-5.39 5.77z"/>
+              </svg>
+              Message Us on Messenger
+            </a>
+            <span className="mt-2.5 block text-[0.8rem] text-[var(--text-muted)]">
+              Send your <strong className="text-[var(--text-secondary)]">category + GCash/Maya receipt</strong> → get your kit
+            </span>
+          </div>
         </div>
       </section>
 
       {/* ═══ HOW IT WORKS ═══ */}
-      <section className="py-24 px-6">
-        <div className="mx-auto max-w-[1120px] text-center">
-          <div className="section-label justify-center">How it works</div>
-          <h2 className="mb-10 text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.2] text-white" style={{ fontFamily: "var(--font-display)" }}>
-            Ready in 3 simple steps
-          </h2>
-          <div className="anim-up rounded-3xl bg-[var(--surface)] p-10 md:p-14">
-            <div className="grid gap-10 md:grid-cols-3 md:gap-10">
-              {HOW_IT_WORKS.map((item, i) => (
-                <div key={item.step} className="relative text-center">
-                  <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full border-2 border-[rgba(74,222,128,0.2)] bg-[var(--green-glow)] text-[1.3rem] font-bold text-[var(--green)]" style={{ fontFamily: "var(--font-display)" }}>
-                    {item.step}
-                  </div>
-                  <h3 className="mb-2 text-[1.1rem] font-bold text-white">{item.title}</h3>
-                  <p className="text-[0.9rem] leading-[1.6] text-[var(--text-muted)]">{item.description}</p>
-                  {/* Connector line */}
-                  {i < HOW_IT_WORKS.length - 1 && (
-                    <div className="absolute top-7 left-[calc(50%+40px)] hidden h-0.5 w-[calc(100%-80px)] bg-gradient-to-r from-[rgba(74,222,128,0.3)] to-[rgba(74,222,128,0.05)] md:block" />
-                  )}
-                </div>
-              ))}
-            </div>
+      <section className="px-5 pb-14">
+        <div className="mx-auto max-w-[680px]">
+          <div className="mb-0 text-center">
+            <div className="section-tag">How it works</div>
+            <h2 className="text-[clamp(1.6rem,5vw,2.2rem)] font-extrabold leading-[1.2] text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>
+              3 steps lang &rsquo;yan
+            </h2>
           </div>
-        </div>
-      </section>
-
-      {/* ═══ QUESTIONS PREVIEW ═══ */}
-      <section id="preview" className="py-12 px-6">
-        <div className="mx-auto max-w-[1120px]">
-          <div className="section-label">Preview</div>
-          <h2 className="mb-4 text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.2] text-white" style={{ fontFamily: "var(--font-display)" }}>
-            Questions you&rsquo;ll get
-          </h2>
-          <p className="mb-10 max-w-[560px] text-[1.05rem] leading-[1.7] text-[var(--text-muted)]">
-            Here&rsquo;s a taste of what&rsquo;s inside your prep kit.
-          </p>
-          <div className="space-y-2">
-            {TEASER_QUESTIONS.map((item, i) => (
-              <div
-                key={i}
-                className={`anim-up flex items-center gap-4 rounded-[10px] border bg-[var(--bg-card)] px-5 py-4 transition-all duration-300 ${
-                  item.locked
-                    ? "border-[var(--border)] opacity-40"
-                    : "border-[var(--border)] hover:border-[var(--border-hover)] hover:translate-x-1"
-                }`}
-              >
-                <span
-                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-[0.78rem] font-bold ${
-                    item.locked
-                      ? "bg-[rgba(255,255,255,0.05)] text-[var(--text-dim)]"
-                      : "bg-[var(--green-glow)] text-[var(--green)]"
-                  }`}
-                >
-                  {item.locked ? "🔒" : i + 1}
-                </span>
-                <span className={`text-[0.95rem] font-medium ${item.locked ? "text-[var(--text-dim)]" : "text-[var(--text)]"}`}>
-                  {item.locked ? "Unlock this question" : item.question}
-                </span>
+          <div className="reveal mt-6">
+            {HOW_IT_WORKS.map((item, i) => (
+              <div key={item.step} className={`flex gap-4 py-4 ${i < HOW_IT_WORKS.length - 1 ? "border-b border-[var(--border)]" : ""}`}>
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--green-light)] text-[1.1rem] font-extrabold text-[var(--green)]" style={{ fontFamily: "var(--font-display)" }}>
+                  {item.step}
+                </div>
+                <div>
+                  <h3 className="text-[0.95rem] font-bold text-[var(--text)]">{item.title}</h3>
+                  <p className="text-[0.85rem] leading-[1.5] text-[var(--text-muted)]">{item.description}</p>
+                </div>
               </div>
             ))}
           </div>
-          <div className="mt-4 rounded-[10px] border border-dashed border-[rgba(74,222,128,0.2)] bg-[var(--green-glow)] px-5 py-4 text-center text-[0.88rem] font-medium text-[var(--green)]">
-            + strong sample answers, recruiter traps, and tips for each question
-          </div>
         </div>
       </section>
 
-      {/* ═══ STAT BANNER ═══ */}
-      <section className="anim-up py-20 px-6 text-center" style={{ background: "linear-gradient(180deg, var(--bg) 0%, var(--surface) 50%, var(--bg) 100%)" }}>
-        <div className="mx-auto max-w-[1120px]">
-          <div className="text-[clamp(3rem,8vw,5.5rem)] font-extrabold leading-[1.1] text-[var(--red)]" style={{ fontFamily: "var(--font-display)" }}>
-            70%
+      {/* ═══ WHAT'S INSIDE ═══ */}
+      <section className="px-5 py-14">
+        <div className="mx-auto max-w-[680px]">
+          <div className="text-center">
+            <div className="section-tag">What you get</div>
+            <h2 className="text-[clamp(1.6rem,5vw,2.2rem)] font-extrabold leading-[1.2] text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>
+              Everything inside your kit
+            </h2>
           </div>
-          <p className="mx-auto mt-5 max-w-[600px] text-[1.2rem] leading-[1.7] text-[var(--text-muted)]">
-            of candidates lose the job — not because they&rsquo;re unqualified, but because they <strong className="text-white">weren&rsquo;t prepared.</strong>
-          </p>
-          <p className="mx-auto mt-4 max-w-[600px] text-[var(--text)]">
-            Don&rsquo;t walk in hoping for the best. Walk in{" "}
-            <strong className="text-[var(--green)]">knowing exactly what to say.</strong>
-          </p>
-        </div>
-      </section>
-
-      {/* ═══ KIT CONTENTS ═══ */}
-      <section className="py-24 px-6">
-        <div className="mx-auto max-w-[1120px] text-center">
-          <div className="section-label justify-center">What&rsquo;s inside</div>
-          <h2 className="mb-4 text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.2] text-white" style={{ fontFamily: "var(--font-display)" }}>
-            Everything you need to get hired
-          </h2>
-          <p className="mx-auto mb-10 max-w-[560px] text-[1.05rem] leading-[1.7] text-[var(--text-muted)]">
-            Walk in confident. Walk out hired.
-          </p>
-          <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6">
             {KIT_CONTENTS.map((item, i) => (
-              <div
-                key={i}
-                className="anim-up flex items-start gap-3.5 rounded-[10px] border border-[var(--border)] bg-[var(--bg-card)] p-5 text-left transition-all hover:border-[var(--border-hover)]"
-              >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-[var(--green-glow)] text-[1.1rem]">
-                  {item.emoji}
+              <div key={i} className="reveal flex items-start gap-3 py-3.5">
+                <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--green-light)] text-[var(--green)]">
+                  <Check className="h-3.5 w-3.5" strokeWidth={3} />
                 </div>
                 <div>
-                  <h4 className="mb-1 text-[0.92rem] font-semibold text-white">{item.title}</h4>
-                  <p className="text-[0.82rem] leading-[1.5] text-[var(--text-muted)]">{item.description}</p>
+                  <h4 className="text-[0.92rem] font-bold text-[var(--text)]">{item.title}</h4>
+                  <p className="mt-0.5 text-[0.82rem] leading-[1.5] text-[var(--text-muted)]">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -306,66 +273,71 @@ export default function LandingPage() {
       </section>
 
       {/* ═══ PRICING ═══ */}
-      <section className="py-12 px-6">
-        <div className="mx-auto max-w-[1120px] text-center">
-          <div className="section-label justify-center">Pricing</div>
-          <h2 className="mb-0 text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.2] text-white" style={{ fontFamily: "var(--font-display)" }}>
-            All of this for just
-          </h2>
-          <div className="anim-up mx-auto mt-10 max-w-[480px] overflow-hidden rounded-3xl border-2 border-[rgba(74,222,128,0.2)] bg-[var(--bg-card)] p-12 shadow-[0_20px_60px_rgba(74,222,128,0.06)]">
-            {/* Top gradient */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--green)] via-[var(--blue)] to-[var(--green)]" />
-            <div className="text-[4rem] font-extrabold text-white" style={{ fontFamily: "var(--font-display)" }}>
-              <sup className="text-[1.5rem] align-super text-[var(--green)]">₱</sup>249
+      <section className="px-5 pb-14">
+        <div className="mx-auto max-w-[680px]">
+          <div className="reveal relative overflow-hidden rounded-[20px] border-2 border-[var(--green)] bg-[var(--bg-card)] p-9 text-center shadow-[var(--shadow-lg)] sm:p-12">
+            {/* Best Value ribbon */}
+            <div className="absolute top-4 -right-8 rotate-45 bg-[var(--green)] px-10 py-1 text-[0.65rem] font-extrabold uppercase tracking-[0.08em] text-white">
+              Best Value
             </div>
-            <p className="mb-8 text-[0.9rem] text-[var(--text-muted)]">
+
+            <div className="text-[3.5rem] font-extrabold leading-none text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>
+              <sup className="text-[1.2rem] align-super text-[var(--green)]">₱</sup>249
+            </div>
+            <p className="mt-2 mb-6 text-[0.85rem] text-[var(--text-muted)]">
               One-time payment · No subscription · No hidden fees
             </p>
-            <div className="mb-8 space-y-2 text-left">
+
+            <div className="mb-7 space-y-1.5 text-left">
               {PRICE_FEATURES.map((feat, i) => (
-                <div key={i} className="flex items-center gap-2.5 py-2 text-[0.9rem] text-[var(--text)]">
-                  <Check className="h-[18px] w-[18px] shrink-0 text-[var(--green)]" />
+                <div key={i} className="flex items-center gap-2.5 py-1.5 text-[0.88rem] text-[var(--text-secondary)]">
+                  <Check className="h-[18px] w-[18px] shrink-0 text-[var(--green)]" strokeWidth={2.5} />
                   {feat}
                 </div>
               ))}
             </div>
+
             <Link
-              href={ctaHref}
-              className="flex w-full items-center justify-center gap-2.5 rounded-full bg-[var(--green)] px-8 py-4 text-base font-bold text-[var(--bg)] shadow-[0_4px_24px_var(--green-glow)] transition-all hover:bg-[#6ee7a0] hover:-translate-y-0.5"
+              href="#categories"
+              className="flex w-full items-center justify-center gap-2.5 rounded-full bg-[var(--green)] px-9 py-4 text-[1.05rem] font-bold text-white shadow-[0_4px_16px_rgba(22,163,74,0.2)] transition-all hover:bg-[#15803d] hover:-translate-y-px"
             >
-              Get Your Kit Now
+              Get Your Kit Now →
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ═══ SOCIAL PROOF ═══ */}
-      <section className="py-24 px-6">
-        <div className="mx-auto max-w-[1120px] text-center">
-          <div className="section-label justify-center">Results</div>
-          <h2 className="mb-10 text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.2] text-white" style={{ fontFamily: "var(--font-display)" }}>
-            Trusted by thousands
-          </h2>
+      {/* ═══ TESTIMONIALS ═══ */}
+      <section className="px-5 py-14">
+        <div className="mx-auto max-w-[680px]">
+          <div className="text-center">
+            <div className="section-tag">Real results</div>
+            <h2 className="text-[clamp(1.6rem,5vw,2.2rem)] font-extrabold leading-[1.2] text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>
+              What job seekers are saying
+            </h2>
+          </div>
+
           {/* Stats */}
-          <div className="anim-up mb-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+          <div className="reveal mt-6 grid grid-cols-3 gap-2.5">
             {TRUST_ITEMS.map((item, i) => (
-              <div key={i} className="rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] px-5 py-8 text-center">
-                <div className="text-[2.2rem] font-extrabold text-[var(--green)]" style={{ fontFamily: "var(--font-display)" }}>
+              <div key={i} className="rounded-[14px] border border-[var(--border)] bg-[var(--bg-card)] px-3 py-5 text-center">
+                <div className="text-[1.8rem] font-extrabold text-[var(--green)]" style={{ fontFamily: "var(--font-display)" }}>
                   {item.stat}
                 </div>
-                <div className="text-[0.85rem] text-[var(--text-muted)]">{item.label}</div>
+                <div className="text-[0.75rem] text-[var(--text-muted)]">{item.label}</div>
               </div>
             ))}
           </div>
-          {/* Testimonials */}
-          <div className="anim-up grid gap-4 sm:grid-cols-3">
+
+          {/* Testimonial cards */}
+          <div className="mt-5">
             {TESTIMONIALS.map((t, i) => (
-              <div key={i} className="rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-6 text-left transition-all hover:border-[var(--border-hover)] hover:-translate-y-0.5">
-                <div className="mb-3 text-[0.85rem] tracking-[2px] text-[var(--gold)]">★★★★★</div>
-                <p className="mb-3.5 text-[0.9rem] italic leading-[1.65] text-[var(--text)]">
+              <div key={i} className="reveal mb-3 rounded-[14px] border border-[var(--border)] bg-[var(--bg-card)] p-5 transition-all hover:shadow-[var(--shadow)]">
+                <div className="mb-2.5 text-[0.82rem] tracking-[2px] text-[var(--gold)]">★★★★★</div>
+                <blockquote className="mb-3 text-[0.92rem] italic leading-[1.6] text-[var(--text)]">
                   &ldquo;{t.text}&rdquo;
-                </p>
-                <p className="text-[0.8rem] font-semibold text-[var(--text-muted)]">
+                </blockquote>
+                <p className="text-[0.78rem] font-bold text-[var(--text-muted)]">
                   {t.name} — {t.role}
                 </p>
               </div>
@@ -374,48 +346,42 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ═══ PAYMENT METHODS ═══ */}
-      <section className="py-10 px-6">
-        <div className="mx-auto flex max-w-[1120px] flex-wrap items-center justify-center gap-3">
+      {/* ═══ PAYMENT BADGES ═══ */}
+      <section className="px-5 py-5">
+        <div className="mx-auto flex max-w-[680px] flex-wrap items-center justify-center gap-2">
           {PAYMENT_BADGES.map((badge, i) => (
-            <div
-              key={i}
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--bg-card)] px-5 py-3 text-[0.82rem] font-medium text-[var(--text-muted)]"
-            >
-              <span className="text-base">{badge.emoji}</span>
-              {badge.label}
+            <div key={i} className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-[var(--bg-card)] px-3.5 py-2 text-[0.75rem] font-semibold text-[var(--text-muted)]">
+              {badge.emoji} {badge.label}
             </div>
           ))}
         </div>
       </section>
 
       {/* ═══ FAQ ═══ */}
-      <section className="py-24 px-6">
-        <div className="mx-auto max-w-[1120px] text-center">
-          <div className="section-label justify-center">FAQ</div>
-          <h2 className="mb-10 text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.2] text-white" style={{ fontFamily: "var(--font-display)" }}>
-            Frequently Asked Questions
-          </h2>
-          <div className="mx-auto max-w-[700px]">
+      <section className="px-5 py-14">
+        <div className="mx-auto max-w-[680px]">
+          <div className="text-center">
+            <div className="section-tag">FAQ</div>
+            <h2 className="text-[clamp(1.6rem,5vw,2.2rem)] font-extrabold leading-[1.2] text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>
+              May tanong ka?
+            </h2>
+          </div>
+          <div className="mt-6">
             {FAQ_ITEMS.map((item, i) => (
               <div key={i} className="border-b border-[var(--border)]">
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="flex w-full items-center justify-between py-5 text-left transition-colors hover:text-white"
+                  className="flex w-full items-center justify-between py-[18px] text-left"
                 >
-                  <span className="text-base font-semibold text-[var(--text)]">{item.q}</span>
+                  <span className="text-[0.92rem] font-bold text-[var(--text)]">{item.q}</span>
                   <ChevronDown
-                    className={`h-5 w-5 shrink-0 text-[var(--text-dim)] transition-transform duration-300 ${
+                    className={`h-[18px] w-[18px] shrink-0 text-[var(--text-muted)] transition-transform duration-300 ${
                       openFaq === i ? "rotate-180" : ""
                     }`}
                   />
                 </button>
-                <div
-                  className={`overflow-hidden transition-all duration-400 ${
-                    openFaq === i ? "max-h-[200px] pb-5" : "max-h-0"
-                  }`}
-                >
-                  <p className="text-[0.9rem] leading-[1.7] text-[var(--text-muted)]">{item.a}</p>
+                <div className={`overflow-hidden transition-all duration-350 ${openFaq === i ? "max-h-[200px] pb-[18px]" : "max-h-0"}`}>
+                  <p className="text-[0.85rem] leading-[1.7] text-[var(--text-muted)]">{item.a}</p>
                 </div>
               </div>
             ))}
@@ -424,17 +390,17 @@ export default function LandingPage() {
       </section>
 
       {/* ═══ FINAL CTA ═══ */}
-      <section className="py-24 px-6 text-center" style={{ background: "radial-gradient(ellipse 60% 50% at 50% 100%, rgba(74,222,128,0.06) 0%, transparent 70%)" }}>
-        <div className="mx-auto max-w-[1120px]">
-          <h2 className="mb-3 text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.2] text-white" style={{ fontFamily: "var(--font-display)" }}>
-            Ready to ace your interview?
+      <section className="border-t border-[rgba(22,163,74,0.1)] bg-[var(--green-bg)] px-5 py-14 text-center">
+        <div className="mx-auto max-w-[680px]">
+          <h2 className="mb-2 text-[clamp(1.6rem,5vw,2.2rem)] font-extrabold leading-[1.2] text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>
+            Ready ka na ba?
           </h2>
-          <p className="mb-9 text-[1.05rem] text-[var(--text-muted)]">
-            Get your personalized prep kit now and walk in with confidence.
+          <p className="mb-6 text-[0.95rem] text-[var(--text-muted)]">
+            Get your kit now. Walk in with confidence.
           </p>
           <Link
-            href={ctaHref}
-            className="inline-flex items-center gap-2.5 rounded-full bg-[var(--green)] px-8 py-4 text-base font-bold text-[var(--bg)] shadow-[0_4px_24px_var(--green-glow)] transition-all hover:bg-[#6ee7a0] hover:-translate-y-0.5 hover:shadow-[0_8px_40px_rgba(74,222,128,0.25)]"
+            href="#categories"
+            className="inline-flex max-w-[380px] items-center justify-center gap-2.5 rounded-full bg-[var(--green)] px-9 py-4 text-[1.05rem] font-bold text-white shadow-[0_4px_16px_rgba(22,163,74,0.2)] transition-all hover:bg-[#15803d] hover:-translate-y-px"
           >
             Get Your Kit — {PRICE.formatted}
             <ArrowRight className="h-[18px] w-[18px]" />
@@ -443,11 +409,29 @@ export default function LandingPage() {
       </section>
 
       {/* ═══ FOOTER ═══ */}
-      <footer className="border-t border-[var(--border)] py-8 px-6 text-center">
-        <p className="text-[0.8rem] text-[var(--text-dim)]">
+      <footer className="px-5 py-6 pb-24 text-center sm:pb-6">
+        <p className="text-[0.75rem] text-[var(--text-muted)]">
           &copy; {new Date().getFullYear()} {SITE.name}. All rights reserved.
         </p>
       </footer>
+
+      {/* ═══ STICKY MOBILE CTA ═══ */}
+      <div
+        className={`fixed bottom-0 left-0 right-0 z-[100] flex items-center justify-center gap-2.5 border-t border-[var(--border)] bg-[rgba(250,250,247,0.95)] px-5 py-3 pb-[calc(12px+env(safe-area-inset-bottom,0px))] backdrop-blur-[16px] transition-transform duration-300 sm:hidden ${
+          showSticky ? "translate-y-0" : "translate-y-full"
+        }`}
+      >
+        <div className="shrink-0 whitespace-nowrap">
+          <span className="text-[1.3rem] font-extrabold text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>₱249</span>
+          <span className="block text-[0.7rem] font-medium text-[var(--text-muted)]">one-time</span>
+        </div>
+        <Link
+          href="#categories"
+          className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[var(--green)] px-5 py-3.5 text-[0.95rem] font-bold text-white transition-colors hover:bg-[#15803d]"
+        >
+          Get Your Kit →
+        </Link>
+      </div>
     </div>
   );
 }

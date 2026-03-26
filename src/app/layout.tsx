@@ -1,15 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Playfair_Display } from "next/font/google";
+import { Libre_Franklin, Source_Serif_4 } from "next/font/google";
 import { AppProvider } from "@/components/providers";
 import "./globals.css";
 
-const dmSans = DM_Sans({
+const libreFranklin = Libre_Franklin({
   variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
-const playfair = Playfair_Display({
+const sourceSerif = Source_Serif_4({
   variable: "--font-display",
   subsets: ["latin"],
   weight: ["600", "700", "800"],
@@ -18,14 +18,18 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "InterviewHanda PH — Ace Your Next Job Interview",
   description:
-    "Get a personalized interview prep kit for ₱249. Tailored questions, expert answers, and tips for your dream job in the Philippines.",
+    "Personalized interview prep kit for Filipino job seekers. 15 tailored questions, sample answers, recruiter traps & more. Just ₱249. Instant delivery via GCash/Maya.",
   keywords:
     "interview prep Philippines, BPO interview questions, virtual assistant interview, job interview tips, Filipino job seekers",
   openGraph: {
     title: "InterviewHanda PH — Ace Your Next Job Interview",
     description:
-      "Personalized interview prep kits for Filipino job seekers. 15 tailored questions, sample answers, and tips for ₱249.",
+      "Stop stressing. Start preparing. Get your personalized interview prep kit for ₱249. Trusted by 2,400+ Filipino job seekers.",
     type: "website",
+    url: "https://interviewhanda-ph.vercel.app/",
+  },
+  twitter: {
+    card: "summary_large_image",
   },
 };
 
@@ -33,7 +37,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#0a0a0f",
+  themeColor: "#16a34a",
 };
 
 export default function RootLayout({
@@ -43,7 +47,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${dmSans.variable} ${playfair.variable} font-sans antialiased`}>
+      <body className={`${libreFranklin.variable} ${sourceSerif.variable} font-sans antialiased`}>
         <AppProvider>
           {children}
         </AppProvider>
