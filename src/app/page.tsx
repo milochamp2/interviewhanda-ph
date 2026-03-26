@@ -1,435 +1,467 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ChevronDown, Check } from "lucide-react";
+import {
+  CheckCircle,
+  ChevronDown,
+  ChevronUp,
+  Lock,
+  MessageCircle,
+  Star,
+  Headset,
+  Laptop,
+  ClipboardList,
+  ShoppingBag,
+  UtensilsCrossed,
+  HeartPulse,
+  BookOpen,
+  Code,
+  PlusCircle,
+} from "lucide-react";
 import {
   SITE,
   PRICE,
-  MESSENGER,
   JOB_CATEGORIES,
-  KIT_CONTENTS,
-  PRICE_FEATURES,
+  TEASER_QUESTIONS,
+  WHATS_INSIDE,
   TRUST_ITEMS,
   TESTIMONIALS,
-  PAYMENT_BADGES,
   FAQ_ITEMS,
   HOW_IT_WORKS,
 } from "@/lib/mvp-config";
 
+const ICON_MAP: Record<string, React.ElementType> = {
+  Headset,
+  Laptop,
+  ClipboardList,
+  ShoppingBag,
+  UtensilsCrossed,
+  HeartPulse,
+  BookOpen,
+  Code,
+  PlusCircle,
+};
+
 export default function LandingPage() {
   const [selectedJob, setSelectedJob] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [showSticky, setShowSticky] = useState(false);
-
-  // Scroll reveal
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -30px 0px" }
-    );
-    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-
-  // Sticky mobile CTA — show after scrolling past hero
-  useEffect(() => {
-    const hero = document.getElementById("hero");
-    if (!hero) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => setShowSticky(!entry.isIntersecting),
-      { threshold: 0 }
-    );
-    obs.observe(hero);
-    return () => obs.disconnect();
-  }, []);
-
-  const selectedLabel = JOB_CATEGORIES.find((c) => c.id === selectedJob)?.label;
-  const messengerHref = selectedLabel
-    ? `${MESSENGER.url}?text=${encodeURIComponent(MESSENGER.prefill(selectedLabel))}`
-    : MESSENGER.url;
 
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
-      {/* ═══ STICKY TOP BAR ═══ */}
-      <div className="fixed top-0 left-0 right-0 z-[100] bg-[var(--green)] px-5 py-2.5 text-center text-[0.82rem] font-semibold text-white">
-        🎯 <strong className="font-extrabold">2,400+</strong> kits delivered &nbsp;·&nbsp; <strong className="font-extrabold">93%</strong> got interview callbacks
-      </div>
-
-      {/* ═══ NAV ═══ */}
-      <nav className="fixed top-[38px] left-0 right-0 z-[99] border-b border-[var(--border)] bg-[rgba(250,250,247,0.92)] px-5 py-3 backdrop-blur-[16px] backdrop-saturate-[1.5]">
-        <div className="mx-auto flex max-w-[680px] items-center justify-between">
-          <a href="#" className="text-[1.15rem] font-extrabold text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>
-            Interview<span className="text-[var(--green)]">Handa</span>
-          </a>
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/90 backdrop-blur-sm">
+        <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-3">
+          <span className="text-lg font-bold tracking-tight text-gray-900">
+            Interview<span className="text-blue-600">Handa</span>
+          </span>
           <Link
-            href="#categories"
-            className="rounded-full bg-[var(--green)] px-5 py-2 text-[0.82rem] font-bold text-white transition-colors hover:bg-[#15803d]"
+            href={selectedJob ? `/pay?job=${selectedJob}` : "#categories"}
+            className="rounded-full bg-blue-600 px-4 py-1.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
           >
             Get Kit — {PRICE.formatted}
           </Link>
         </div>
-      </nav>
+      </header>
 
-      {/* ═══ HERO ═══ */}
-      <section id="hero" className="px-5 pt-[120px] pb-12 text-center">
-        <div className="mx-auto max-w-[680px]">
-          {/* Trust badge */}
-          <div
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-[rgba(202,138,4,0.15)] bg-[var(--gold-light)] px-4 py-1.5 text-[0.78rem] font-semibold text-[var(--gold)]"
-            style={{ animation: "fadeUp 0.5s ease both" }}
-          >
-            ⭐ 4.9/5 from 2,400+ Filipino job seekers
-          </div>
+      <main>
+        {/* Hero */}
+        <section className="px-4 pt-12 pb-10 text-center">
+          <div className="mx-auto max-w-2xl">
+            <h1 className="mb-4 text-3xl font-extrabold leading-tight tracking-tight text-gray-900 sm:text-4xl">
+              Stop Stressing About Your Interview.
+              <br />
+              <span className="text-blue-600">Start Preparing.</span>
+            </h1>
+            <p className="mb-6 text-base text-gray-500 sm:text-lg">
+              Get a personalized interview prep kit for your exact job — tailored questions, expert answers, and tips Filipino employers actually ask.
+            </p>
 
-          <h1
-            className="mb-4 text-[clamp(2rem,7vw,2.8rem)] font-extrabold leading-[1.15] text-[var(--text)]"
-            style={{ fontFamily: "var(--font-display)", animation: "fadeUp 0.5s 0.1s ease both" }}
-          >
-            Alam mo na ba kung ano{" "}
-            <span className="text-[var(--green)] underline decoration-[rgba(22,163,74,0.3)] underline-offset-4">
-              sasabihin mo
-            </span>{" "}
-            sa interview?
-          </h1>
+            {/* Preview card */}
+            <div className="mx-auto max-w-sm rounded-2xl border border-gray-200 bg-gray-50 p-5 text-left">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                Sample Question
+              </p>
+              <p className="mb-2 text-sm font-medium text-gray-900">
+                &ldquo;Tell me about yourself.&rdquo;
+              </p>
+              <p className="text-sm text-gray-500">
+                &ldquo;I&rsquo;m a customer service professional with 2 years in BPO. I specialize in handling escalations and maintaining a 95% CSAT score...&rdquo;
+              </p>
+              <div className="mt-3 flex items-center gap-1.5 text-xs text-blue-600 font-medium">
+                <Lock className="h-3 w-3" />
+                14 more questions inside
+              </div>
+            </div>
 
-          <p
-            className="mx-auto mb-7 max-w-[500px] text-[1.05rem] leading-[1.7] text-[var(--text-secondary)]"
-            style={{ animation: "fadeUp 0.5s 0.2s ease both" }}
-          >
-            Get a personalized prep kit with 15 real interview questions, strong sample answers, and tips for your exact job — delivered instantly for just {PRICE.formatted}.
-          </p>
-
-          <div style={{ animation: "fadeUp 0.5s 0.3s ease both" }}>
             <Link
-              href="#categories"
-              className="inline-flex w-full max-w-[380px] items-center justify-center gap-2.5 rounded-full bg-[var(--green)] px-9 py-4 text-[1.05rem] font-bold text-white shadow-[0_4px_16px_rgba(22,163,74,0.2)] transition-all hover:bg-[#15803d] hover:-translate-y-px hover:shadow-[0_6px_24px_rgba(22,163,74,0.25)]"
+              href={selectedJob ? `/pay?job=${selectedJob}` : "#categories"}
+              className="mt-8 inline-flex items-center gap-2 rounded-full bg-blue-600 px-8 py-3.5 text-base font-semibold text-white hover:bg-blue-700 transition-colors"
             >
               Get Your Kit — {PRICE.formatted}
-              <ArrowRight className="h-[18px] w-[18px]" />
             </Link>
-            <span className="mt-2.5 block text-[0.8rem] text-[var(--text-muted)]">
-              GCash or Maya · <strong className="text-[var(--text-secondary)]">Instant delivery</strong>
-            </span>
           </div>
+        </section>
 
-          {/* Proof strip */}
-          <div
-            className="mt-8 flex flex-wrap items-center justify-center gap-6 text-[0.82rem] font-medium text-[var(--text-muted)]"
-            style={{ animation: "fadeUp 0.5s 0.4s ease both" }}
-          >
-            <span><strong className="font-bold text-[var(--text)]">2,400+</strong> kits sold</span>
-            <span><span className="tracking-[1px] text-[var(--gold)]">★★★★★</span> <strong className="font-bold text-[var(--text)]">4.9</strong></span>
-            <span><strong className="font-bold text-[var(--text)]">93%</strong> got callbacks</span>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ SAMPLE CARD ═══ */}
-      <section className="px-5 pb-12">
-        <div className="reveal mx-auto max-w-[680px] overflow-hidden rounded-[14px] border border-[var(--border)] bg-[var(--bg-card)] shadow-[var(--shadow)]">
-          <div className="flex items-center justify-between border-b border-[var(--border)] bg-[var(--bg-warm)] px-5 py-3.5">
-            <span className="text-[0.75rem] font-bold uppercase tracking-[0.08em] text-[var(--text-muted)]">Preview from your kit</span>
-            <span className="rounded-full bg-[var(--green-light)] px-2.5 py-0.5 text-[0.7rem] font-bold text-[var(--green)]">Q1 of 15</span>
-          </div>
-          <div className="p-5">
-            <div className="mb-3 rounded-[10px] border-l-[3px] border-[var(--green)] bg-[var(--bg-warm)] px-4 py-3.5 text-[0.95rem] font-bold text-[var(--text)]">
-              &ldquo;Tell me about yourself.&rdquo;
-            </div>
-            <div className="rounded-[10px] border-l-[3px] border-[rgba(22,163,74,0.25)] bg-[var(--green-bg)] px-4 py-3.5 text-[0.88rem] leading-[1.7] text-[var(--text-secondary)]">
-              &ldquo;I&rsquo;m a customer service professional with 2 years in BPO. I specialize in handling escalations and maintaining a 95% CSAT score&hellip;&rdquo;
-            </div>
-          </div>
-          <div className="flex items-center justify-between border-t border-[var(--border)] bg-[var(--bg-warm)] px-5 py-3.5">
-            <span className="text-[0.82rem] font-bold text-[var(--green)]">14 more questions inside →</span>
-            <div className="flex gap-1">
-              <span className="h-[7px] w-[7px] rounded-full bg-[var(--text-muted)] opacity-30" />
-              <span className="h-[7px] w-[7px] rounded-full bg-[var(--text-muted)] opacity-30" />
-              <span className="h-[7px] w-[7px] rounded-full bg-[var(--text-muted)] opacity-30" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ URGENCY BANNER ═══ */}
-      <section className="reveal border-y border-[rgba(220,38,38,0.08)] bg-[var(--red-light)] px-5 py-9 text-center">
-        <div className="mx-auto max-w-[680px]">
-          <div className="text-[clamp(2.5rem,10vw,4rem)] font-extrabold leading-none text-[var(--red)]" style={{ fontFamily: "var(--font-display)" }}>
-            70%
-          </div>
-          <p className="mx-auto mt-2.5 max-w-[480px] text-base leading-[1.6] text-[var(--text-secondary)]">
-            of candidates lose the job — not because they&rsquo;re unqualified, but because they <strong className="text-[var(--text)]">weren&rsquo;t prepared.</strong>
-          </p>
-        </div>
-      </section>
-
-      {/* ═══ CATEGORIES ═══ */}
-      <section id="categories" className="px-5 py-14">
-        <div className="mx-auto max-w-[680px]">
-          <div className="mb-6 text-center">
-            <div className="section-tag">Step 1</div>
-            <h2 className="text-[clamp(1.6rem,5vw,2.2rem)] font-extrabold leading-[1.2] text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>
-              Anong job ang papasukan mo?
+        {/* Job Categories */}
+        <section id="categories" className="section-divider px-4 py-12">
+          <div className="mx-auto max-w-2xl">
+            <h2 className="mb-2 text-center text-2xl font-bold text-gray-900">
+              What job are you preparing for?
             </h2>
-            <p className="mt-2 text-[0.95rem] text-[var(--text-muted)]">
-              Pick your category. We&rsquo;ll tailor your kit to this role.
+            <p className="mb-8 text-center text-sm text-gray-500">
+              Pick your category. Your kit will be tailored to this role.
             </p>
+            <div className="grid grid-cols-3 gap-3 sm:grid-cols-3">
+              {JOB_CATEGORIES.map((cat) => {
+                const Icon = ICON_MAP[cat.icon] || PlusCircle;
+                const isSelected = selectedJob === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => setSelectedJob(cat.id)}
+                    className={`flex flex-col items-center gap-2 rounded-xl border p-4 text-center transition-all ${
+                      isSelected
+                        ? "border-blue-600 bg-blue-50 ring-2 ring-blue-600/20"
+                        : "border-gray-200 bg-white hover:border-blue-300 hover:bg-blue-50/50"
+                    }`}
+                  >
+                    <Icon className={`h-6 w-6 ${isSelected ? "text-blue-600" : "text-gray-400"}`} />
+                    <span className={`text-xs font-medium leading-tight ${isSelected ? "text-blue-700" : "text-gray-700"}`}>
+                      {cat.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+            {selectedJob && (
+              <div className="mt-6 text-center">
+                <Link
+                  href={`/pay?job=${selectedJob}`}
+                  className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-8 py-3 text-base font-semibold text-white hover:bg-blue-700 transition-colors"
+                >
+                  Continue — {PRICE.formatted}
+                </Link>
+              </div>
+            )}
           </div>
-          <div className="grid grid-cols-3 gap-2.5">
-            {JOB_CATEGORIES.map((cat) => {
-              const isSelected = selectedJob === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => setSelectedJob(cat.id)}
-                  className={`reveal select-none rounded-[10px] border-2 p-4 text-center transition-all sm:p-5 ${
-                    isSelected
-                      ? "border-[var(--green)] bg-[var(--green-bg)] shadow-[0_0_0_1px_var(--green)]"
-                      : "border-[var(--border)] bg-[var(--bg-card)] hover:border-[var(--green)] hover:bg-[var(--green-bg)]"
+        </section>
+
+        {/* How It Works */}
+        <section className="section-divider px-4 py-12 bg-gray-50">
+          <div className="mx-auto max-w-2xl">
+            <h2 className="mb-8 text-center text-2xl font-bold text-gray-900">
+              How It Works
+            </h2>
+            <div className="grid gap-6 sm:grid-cols-3">
+              {HOW_IT_WORKS.map((item) => (
+                <div key={item.step} className="text-center">
+                  <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white">
+                    {item.step}
+                  </div>
+                  <h3 className="mb-1 text-base font-semibold text-gray-900">{item.title}</h3>
+                  <p className="text-sm text-gray-500">{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Teaser Questions */}
+        <section className="section-divider px-4 py-12">
+          <div className="mx-auto max-w-2xl">
+            <h2 className="mb-2 text-center text-2xl font-bold text-gray-900">
+              Preview: Questions You&rsquo;ll Get
+            </h2>
+            <p className="mb-8 text-center text-sm text-gray-500">
+              Here&rsquo;s a taste of what&rsquo;s inside your prep kit.
+            </p>
+            <div className="space-y-3">
+              {TEASER_QUESTIONS.map((item, i) => (
+                <div
+                  key={i}
+                  className={`flex items-center gap-3 rounded-xl border px-4 py-3 ${
+                    item.locked
+                      ? "border-gray-100 bg-gray-50/50"
+                      : "border-gray-200 bg-white"
                   }`}
                 >
-                  <span className="mb-1.5 block text-[1.3rem] sm:text-[1.5rem]">{cat.emoji}</span>
-                  <span className="text-[0.72rem] font-semibold leading-tight text-[var(--text-secondary)] sm:text-[0.78rem]">{cat.label}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Messenger CTA */}
-          <div className="mt-6 text-center">
-            <a
-              href={messengerHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex w-full max-w-[380px] items-center justify-center gap-2.5 rounded-full bg-[var(--blue-messenger)] px-9 py-4 text-base font-bold text-white shadow-[0_4px_16px_rgba(0,132,255,0.2)] transition-all hover:bg-[#0070e0]"
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.2 5.42 3.15 7.2V22l2.96-1.63c.84.23 1.72.36 2.65.36h.24c5.64 0 10-4.13 10-9.7S17.64 2 12 2zm1.05 13.07-2.55-2.73L5.5 15.2l5.45-5.78 2.55 2.73 4.94-2.85-5.39 5.77z"/>
-              </svg>
-              Message Us on Messenger
-            </a>
-            <span className="mt-2.5 block text-[0.8rem] text-[var(--text-muted)]">
-              Send your <strong className="text-[var(--text-secondary)]">category + GCash/Maya receipt</strong> → get your kit
-            </span>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ HOW IT WORKS ═══ */}
-      <section className="px-5 pb-14">
-        <div className="mx-auto max-w-[680px]">
-          <div className="mb-0 text-center">
-            <div className="section-tag">How it works</div>
-            <h2 className="text-[clamp(1.6rem,5vw,2.2rem)] font-extrabold leading-[1.2] text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>
-              3 steps lang &rsquo;yan
-            </h2>
-          </div>
-          <div className="reveal mt-6">
-            {HOW_IT_WORKS.map((item, i) => (
-              <div key={item.step} className={`flex gap-4 py-4 ${i < HOW_IT_WORKS.length - 1 ? "border-b border-[var(--border)]" : ""}`}>
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--green-light)] text-[1.1rem] font-extrabold text-[var(--green)]" style={{ fontFamily: "var(--font-display)" }}>
-                  {item.step}
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-semibold text-blue-600">
+                    {i + 1}
+                  </span>
+                  {item.locked ? (
+                    <span className="flex-1 text-sm text-gray-400 italic flex items-center gap-2">
+                      <Lock className="h-3.5 w-3.5" />
+                      Unlock this question
+                    </span>
+                  ) : (
+                    <span className="flex-1 text-sm font-medium text-gray-800">
+                      {item.question}
+                    </span>
+                  )}
                 </div>
-                <div>
-                  <h3 className="text-[0.95rem] font-bold text-[var(--text)]">{item.title}</h3>
-                  <p className="text-[0.85rem] leading-[1.5] text-[var(--text-muted)]">{item.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ WHAT'S INSIDE ═══ */}
-      <section className="px-5 py-14">
-        <div className="mx-auto max-w-[680px]">
-          <div className="text-center">
-            <div className="section-tag">What you get</div>
-            <h2 className="text-[clamp(1.6rem,5vw,2.2rem)] font-extrabold leading-[1.2] text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>
-              Everything inside your kit
-            </h2>
-          </div>
-          <div className="mt-6">
-            {KIT_CONTENTS.map((item, i) => (
-              <div key={i} className="reveal flex items-start gap-3 py-3.5">
-                <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--green-light)] text-[var(--green)]">
-                  <Check className="h-3.5 w-3.5" strokeWidth={3} />
-                </div>
-                <div>
-                  <h4 className="text-[0.92rem] font-bold text-[var(--text)]">{item.title}</h4>
-                  <p className="mt-0.5 text-[0.82rem] leading-[1.5] text-[var(--text-muted)]">{item.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ PRICING ═══ */}
-      <section className="px-5 pb-14">
-        <div className="mx-auto max-w-[680px]">
-          <div className="reveal relative overflow-hidden rounded-[20px] border-2 border-[var(--green)] bg-[var(--bg-card)] p-9 text-center shadow-[var(--shadow-lg)] sm:p-12">
-            {/* Best Value ribbon */}
-            <div className="absolute top-4 -right-8 rotate-45 bg-[var(--green)] px-10 py-1 text-[0.65rem] font-extrabold uppercase tracking-[0.08em] text-white">
-              Best Value
+              ))}
             </div>
-
-            <div className="text-[3.5rem] font-extrabold leading-none text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>
-              <sup className="text-[1.2rem] align-super text-[var(--green)]">₱</sup>249
-            </div>
-            <p className="mt-2 mb-6 text-[0.85rem] text-[var(--text-muted)]">
-              One-time payment · No subscription · No hidden fees
+            <p className="mt-4 text-center text-xs text-gray-400">
+              + strong sample answers, recruiter traps, and tips for each question
             </p>
+          </div>
+        </section>
 
-            <div className="mb-7 space-y-1.5 text-left">
-              {PRICE_FEATURES.map((feat, i) => (
-                <div key={i} className="flex items-center gap-2.5 py-1.5 text-[0.88rem] text-[var(--text-secondary)]">
-                  <Check className="h-[18px] w-[18px] shrink-0 text-[var(--green)]" strokeWidth={2.5} />
-                  {feat}
+        {/* Confidence Gap */}
+        <section className="section-divider px-4 py-12 bg-blue-50">
+          <div className="mx-auto max-w-xl text-center">
+            <h2 className="mb-4 text-2xl font-bold text-gray-900">
+              70% of candidates lose the job — not because they&rsquo;re unqualified, but because they weren&rsquo;t prepared.
+            </h2>
+            <p className="text-base text-gray-600">
+              Don&rsquo;t walk into your interview hoping for the best. Walk in <strong>knowing</strong> exactly what to say.
+            </p>
+          </div>
+        </section>
+
+        {/* What's Inside */}
+        <section className="section-divider px-4 py-12">
+          <div className="mx-auto max-w-2xl">
+            <h2 className="mb-2 text-center text-2xl font-bold text-gray-900">
+              What&rsquo;s Inside Your Kit
+            </h2>
+            <p className="mb-8 text-center text-sm text-gray-500">
+              Everything you need to walk in confident and walk out hired.
+            </p>
+            <div className="space-y-3">
+              {WHATS_INSIDE.map((item, i) => (
+                <div key={i} className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3">
+                  <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-500" />
+                  <span className="text-sm font-medium text-gray-800">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Price Section */}
+        <section className="section-divider px-4 py-12 bg-gray-50">
+          <div className="mx-auto max-w-md text-center">
+            <h2 className="mb-2 text-2xl font-bold text-gray-900">
+              All of this for just
+            </h2>
+            <div className="mb-2 text-5xl font-extrabold text-blue-600">{PRICE.formatted}</div>
+            <p className="mb-6 text-sm text-gray-500">One-time payment. No subscription. No hidden fees.</p>
+            <Link
+              href={selectedJob ? `/pay?job=${selectedJob}` : "#categories"}
+              className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-8 py-3.5 text-base font-semibold text-white hover:bg-blue-700 transition-colors"
+            >
+              Get Your Kit Now
+            </Link>
+          </div>
+        </section>
+
+        {/* Trust / Social Proof */}
+        <section className="section-divider px-4 py-12">
+          <div className="mx-auto max-w-2xl">
+            {/* Golden Laurel Wreath Badge */}
+            <div className="mb-10 flex flex-col items-center">
+              <div className="relative mb-4">
+                {/* Laurel wreath SVG */}
+                <svg width="140" height="140" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-yellow-500">
+                  {/* Left branch */}
+                  <path d="M38 110C30 95 28 78 32 62C28 72 22 82 24 96C26 106 32 112 38 110Z" fill="currentColor" opacity="0.7"/>
+                  <path d="M42 100C36 88 34 74 37 60C34 68 28 77 30 89C32 98 37 103 42 100Z" fill="currentColor" opacity="0.6"/>
+                  <path d="M46 90C42 80 40 68 42 56C40 63 35 71 36 82C37 90 42 94 46 90Z" fill="currentColor" opacity="0.5"/>
+                  <path d="M50 82C47 73 46 63 47 52C46 58 42 65 42 75C43 82 47 86 50 82Z" fill="currentColor" opacity="0.5"/>
+                  <path d="M54 74C52 66 52 57 53 48C52 53 49 59 49 68C49 75 52 78 54 74Z" fill="currentColor" opacity="0.4"/>
+                  {/* Right branch (mirrored) */}
+                  <path d="M102 110C110 95 112 78 108 62C112 72 118 82 116 96C114 106 108 112 102 110Z" fill="currentColor" opacity="0.7"/>
+                  <path d="M98 100C104 88 106 74 103 60C106 68 112 77 110 89C108 98 103 103 98 100Z" fill="currentColor" opacity="0.6"/>
+                  <path d="M94 90C98 80 100 68 98 56C100 63 105 71 104 82C103 90 98 94 94 90Z" fill="currentColor" opacity="0.5"/>
+                  <path d="M90 82C93 73 94 63 93 52C94 58 98 65 98 75C97 82 93 86 90 82Z" fill="currentColor" opacity="0.5"/>
+                  <path d="M86 74C88 66 88 57 87 48C88 53 91 59 91 68C91 75 88 78 86 74Z" fill="currentColor" opacity="0.4"/>
+                  {/* Bottom ribbon */}
+                  <path d="M45 108L35 130L42 124L48 132L52 112Z" fill="currentColor" opacity="0.6"/>
+                  <path d="M95 108L105 130L98 124L92 132L88 112Z" fill="currentColor" opacity="0.6"/>
+                </svg>
+                {/* Center content */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-3xl font-extrabold text-yellow-600">4.9</span>
+                  <div className="flex gap-0.5 mt-0.5">
+                    {[...Array(5)].map((_, j) => (
+                      <Star key={j} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <span className="text-[10px] font-medium text-gray-500 mt-0.5">RATING</span>
+                </div>
+              </div>
+              <p className="text-sm font-semibold text-gray-700">Trusted by 2,400+ job seekers</p>
+            </div>
+
+            {/* Stats row */}
+            <div className="mb-10 grid grid-cols-3 gap-4 text-center">
+              {TRUST_ITEMS.map((item, i) => (
+                <div key={i}>
+                  <div className="text-2xl font-extrabold text-gray-900">{item.stat}</div>
+                  <div className="text-xs text-gray-500">{item.label}</div>
                 </div>
               ))}
             </div>
 
+            {/* Testimonials */}
+            <div className="space-y-4">
+              {TESTIMONIALS.map((t, i) => (
+                <div key={i} className="rounded-xl border border-gray-200 bg-white p-5">
+                  <div className="mb-2 flex gap-0.5">
+                    {[...Array(5)].map((_, j) => (
+                      <Star key={j} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <p className="mb-3 text-sm text-gray-700">&ldquo;{t.text}&rdquo;</p>
+                  <p className="text-xs font-semibold text-gray-900">
+                    {t.name} <span className="font-normal text-gray-400">— {t.role}</span>
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Infinite Payment Logos Marquee */}
+        <section className="overflow-hidden border-y border-gray-100 bg-gray-50 py-6">
+          <div className="marquee-track">
+            {[...Array(2)].map((_, setIdx) => (
+              <div key={setIdx} className="flex shrink-0 items-center gap-10 px-5">
+                {/* GCash */}
+                <div className="flex items-center gap-2 shrink-0">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="#007DFE"/>
+                    <text x="16" y="21" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" fontFamily="sans-serif">G</text>
+                  </svg>
+                  <span className="text-sm font-bold text-[#007DFE]">GCash</span>
+                </div>
+                {/* Maya */}
+                <div className="flex items-center gap-2 shrink-0">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="#00B274"/>
+                    <text x="16" y="21" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" fontFamily="sans-serif">M</text>
+                  </svg>
+                  <span className="text-sm font-bold text-[#00B274]">Maya</span>
+                </div>
+                {/* Secure Payment */}
+                <div className="flex items-center gap-2 shrink-0">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="#F3F4F6"/>
+                    <path d="M16 8L10 11V16C10 20.4 12.6 24.5 16 26C19.4 24.5 22 20.4 22 16V11L16 8Z" fill="#22C55E" opacity="0.9"/>
+                    <path d="M14 17L15.5 18.5L19 15" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <span className="text-sm font-semibold text-gray-600">Secure Payment</span>
+                </div>
+                {/* Instant Delivery */}
+                <div className="flex items-center gap-2 shrink-0">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="#F3F4F6"/>
+                    <path d="M17 9L12 18H16L15 23L20 14H16L17 9Z" fill="#F59E0B"/>
+                  </svg>
+                  <span className="text-sm font-semibold text-gray-600">Instant Delivery</span>
+                </div>
+                {/* Google Drive */}
+                <div className="flex items-center gap-2 shrink-0">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="#F3F4F6"/>
+                    <path d="M12 10L8 18H14L18 10H12Z" fill="#4285F4"/>
+                    <path d="M18 10L14 18L17 23H23L27 18H18Z" fill="#FBBC04" opacity="0.9"/>
+                    <path d="M8 18L11 23H17L14 18H8Z" fill="#34A853"/>
+                  </svg>
+                  <span className="text-sm font-semibold text-gray-600">Google Drive</span>
+                </div>
+                {/* Messenger */}
+                <div className="flex items-center gap-2 shrink-0">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="#F3F4F6"/>
+                    <path d="M16 8C11.6 8 8 11.2 8 15.2C8 17.4 9.1 19.3 10.8 20.6V24L14 22.2C14.6 22.4 15.3 22.5 16 22.5C20.4 22.5 24 19.3 24 15.2C24 11.2 20.4 8 16 8Z" fill="#0084FF"/>
+                    <path d="M12 16.5L15 13L17 16L20 13" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <span className="text-sm font-semibold text-gray-600">Messenger</span>
+                </div>
+                {/* No Account Needed */}
+                <div className="flex items-center gap-2 shrink-0">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="#F3F4F6"/>
+                    <circle cx="16" cy="14" r="4" fill="#6366F1" opacity="0.8"/>
+                    <path d="M10 24C10 20.7 12.7 18 16 18C19.3 18 22 20.7 22 24" stroke="#6366F1" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+                    <path d="M9 9L23 23" stroke="#EF4444" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                  <span className="text-sm font-semibold text-gray-600">No Account Needed</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="section-divider px-4 py-12 bg-gray-50">
+          <div className="mx-auto max-w-2xl">
+            <h2 className="mb-8 text-center text-2xl font-bold text-gray-900">
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-3">
+              {FAQ_ITEMS.map((item, i) => (
+                <div key={i} className="rounded-xl border border-gray-200 bg-white">
+                  <button
+                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                    className="flex w-full items-center justify-between px-5 py-4 text-left"
+                  >
+                    <span className="text-sm font-semibold text-gray-900">{item.q}</span>
+                    {openFaq === i ? (
+                      <ChevronUp className="h-4 w-4 shrink-0 text-gray-400" />
+                    ) : (
+                      <ChevronDown className="h-4 w-4 shrink-0 text-gray-400" />
+                    )}
+                  </button>
+                  {openFaq === i && (
+                    <div className="border-t border-gray-100 px-5 py-4">
+                      <p className="text-sm text-gray-600">{item.a}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Final CTA */}
+        <section className="px-4 py-16">
+          <div className="mx-auto max-w-md text-center">
+            <h2 className="mb-3 text-2xl font-bold text-gray-900">
+              Ready to ace your interview?
+            </h2>
+            <p className="mb-6 text-sm text-gray-500">
+              Get your personalized prep kit now and walk in with confidence.
+            </p>
             <Link
-              href="#categories"
-              className="flex w-full items-center justify-center gap-2.5 rounded-full bg-[var(--green)] px-9 py-4 text-[1.05rem] font-bold text-white shadow-[0_4px_16px_rgba(22,163,74,0.2)] transition-all hover:bg-[#15803d] hover:-translate-y-px"
+              href={selectedJob ? `/pay?job=${selectedJob}` : "#categories"}
+              className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-8 py-3.5 text-base font-semibold text-white hover:bg-blue-700 transition-colors"
             >
-              Get Your Kit Now →
+              Get Your Kit — {PRICE.formatted}
             </Link>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      {/* ═══ TESTIMONIALS ═══ */}
-      <section className="px-5 py-14">
-        <div className="mx-auto max-w-[680px]">
-          <div className="text-center">
-            <div className="section-tag">Real results</div>
-            <h2 className="text-[clamp(1.6rem,5vw,2.2rem)] font-extrabold leading-[1.2] text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>
-              What job seekers are saying
-            </h2>
-          </div>
-
-          {/* Stats */}
-          <div className="reveal mt-6 grid grid-cols-3 gap-2.5">
-            {TRUST_ITEMS.map((item, i) => (
-              <div key={i} className="rounded-[14px] border border-[var(--border)] bg-[var(--bg-card)] px-3 py-5 text-center">
-                <div className="text-[1.8rem] font-extrabold text-[var(--green)]" style={{ fontFamily: "var(--font-display)" }}>
-                  {item.stat}
-                </div>
-                <div className="text-[0.75rem] text-[var(--text-muted)]">{item.label}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Testimonial cards */}
-          <div className="mt-5">
-            {TESTIMONIALS.map((t, i) => (
-              <div key={i} className="reveal mb-3 rounded-[14px] border border-[var(--border)] bg-[var(--bg-card)] p-5 transition-all hover:shadow-[var(--shadow)]">
-                <div className="mb-2.5 text-[0.82rem] tracking-[2px] text-[var(--gold)]">★★★★★</div>
-                <blockquote className="mb-3 text-[0.92rem] italic leading-[1.6] text-[var(--text)]">
-                  &ldquo;{t.text}&rdquo;
-                </blockquote>
-                <p className="text-[0.78rem] font-bold text-[var(--text-muted)]">
-                  {t.name} — {t.role}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ PAYMENT BADGES ═══ */}
-      <section className="px-5 py-5">
-        <div className="mx-auto flex max-w-[680px] flex-wrap items-center justify-center gap-2">
-          {PAYMENT_BADGES.map((badge, i) => (
-            <div key={i} className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-[var(--bg-card)] px-3.5 py-2 text-[0.75rem] font-semibold text-[var(--text-muted)]">
-              {badge.emoji} {badge.label}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ═══ FAQ ═══ */}
-      <section className="px-5 py-14">
-        <div className="mx-auto max-w-[680px]">
-          <div className="text-center">
-            <div className="section-tag">FAQ</div>
-            <h2 className="text-[clamp(1.6rem,5vw,2.2rem)] font-extrabold leading-[1.2] text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>
-              May tanong ka?
-            </h2>
-          </div>
-          <div className="mt-6">
-            {FAQ_ITEMS.map((item, i) => (
-              <div key={i} className="border-b border-[var(--border)]">
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="flex w-full items-center justify-between py-[18px] text-left"
-                >
-                  <span className="text-[0.92rem] font-bold text-[var(--text)]">{item.q}</span>
-                  <ChevronDown
-                    className={`h-[18px] w-[18px] shrink-0 text-[var(--text-muted)] transition-transform duration-300 ${
-                      openFaq === i ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                <div className={`overflow-hidden transition-all duration-350 ${openFaq === i ? "max-h-[200px] pb-[18px]" : "max-h-0"}`}>
-                  <p className="text-[0.85rem] leading-[1.7] text-[var(--text-muted)]">{item.a}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ FINAL CTA ═══ */}
-      <section className="border-t border-[rgba(22,163,74,0.1)] bg-[var(--green-bg)] px-5 py-14 text-center">
-        <div className="mx-auto max-w-[680px]">
-          <h2 className="mb-2 text-[clamp(1.6rem,5vw,2.2rem)] font-extrabold leading-[1.2] text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>
-            Ready ka na ba?
-          </h2>
-          <p className="mb-6 text-[0.95rem] text-[var(--text-muted)]">
-            Get your kit now. Walk in with confidence.
+      {/* Footer */}
+      <footer className="border-t border-gray-100 px-4 py-6">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-xs text-gray-400">
+            &copy; {new Date().getFullYear()} {SITE.name}. All rights reserved.
           </p>
-          <Link
-            href="#categories"
-            className="inline-flex max-w-[380px] items-center justify-center gap-2.5 rounded-full bg-[var(--green)] px-9 py-4 text-[1.05rem] font-bold text-white shadow-[0_4px_16px_rgba(22,163,74,0.2)] transition-all hover:bg-[#15803d] hover:-translate-y-px"
-          >
-            Get Your Kit — {PRICE.formatted}
-            <ArrowRight className="h-[18px] w-[18px]" />
-          </Link>
         </div>
-      </section>
-
-      {/* ═══ FOOTER ═══ */}
-      <footer className="px-5 py-6 pb-24 text-center sm:pb-6">
-        <p className="text-[0.75rem] text-[var(--text-muted)]">
-          &copy; {new Date().getFullYear()} {SITE.name}. All rights reserved.
-        </p>
       </footer>
 
-      {/* ═══ STICKY MOBILE CTA ═══ */}
-      <div
-        className={`fixed bottom-0 left-0 right-0 z-[100] flex items-center justify-center gap-2.5 border-t border-[var(--border)] bg-[rgba(250,250,247,0.95)] px-5 py-3 pb-[calc(12px+env(safe-area-inset-bottom,0px))] backdrop-blur-[16px] transition-transform duration-300 sm:hidden ${
-          showSticky ? "translate-y-0" : "translate-y-full"
-        }`}
-      >
-        <div className="shrink-0 whitespace-nowrap">
-          <span className="text-[1.3rem] font-extrabold text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>₱249</span>
-          <span className="block text-[0.7rem] font-medium text-[var(--text-muted)]">one-time</span>
-        </div>
+      {/* Floating Messenger CTA (mobile) */}
+      <div className="fixed bottom-4 right-4 z-50 sm:hidden">
         <Link
-          href="#categories"
-          className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[var(--green)] px-5 py-3.5 text-[0.95rem] font-bold text-white transition-colors hover:bg-[#15803d]"
+          href={selectedJob ? `/pay?job=${selectedJob}` : "#categories"}
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 text-white shadow-lg hover:bg-blue-700 transition-colors"
         >
-          Get Your Kit →
+          <MessageCircle className="h-6 w-6" />
         </Link>
       </div>
     </div>

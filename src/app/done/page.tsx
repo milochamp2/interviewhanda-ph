@@ -6,34 +6,34 @@ import { SITE, MESSENGER } from "@/lib/mvp-config";
 
 export default function DonePage() {
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="border-b border-[var(--border)] px-5 py-3">
-        <div className="mx-auto flex max-w-[680px] items-center justify-center">
-          <span className="text-[1.15rem] font-extrabold text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>
-            Interview<span className="text-[var(--green)]">Handa</span>
+      <header className="border-b border-gray-100 px-4 py-3">
+        <div className="mx-auto flex max-w-lg items-center justify-center">
+          <span className="text-base font-bold text-gray-900">
+            Interview<span className="text-blue-600">Handa</span>
           </span>
         </div>
       </header>
 
-      <main className="mx-auto max-w-[680px] px-5 py-16 text-center">
-        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--green-light)]">
-          <CheckCircle className="h-8 w-8 text-[var(--green)]" />
+      <main className="mx-auto max-w-lg px-4 py-16 text-center">
+        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+          <CheckCircle className="h-8 w-8 text-green-600" />
         </div>
 
-        <h1 className="mb-2 text-2xl font-extrabold text-[var(--text)]" style={{ fontFamily: "var(--font-display)" }}>
+        <h1 className="mb-2 text-2xl font-bold text-gray-900">
           Payment Sent!
         </h1>
-        <p className="mb-8 text-sm text-[var(--text-muted)]">
+        <p className="mb-8 text-sm text-gray-500">
           We&rsquo;re verifying your payment. Your interview prep kit will be sent to you via Messenger shortly.
         </p>
 
-        <div className="mb-8 rounded-[14px] border border-[var(--border)] bg-[var(--bg-card)] p-5 shadow-[var(--shadow-sm)]">
-          <div className="flex items-center justify-center gap-2 text-sm text-[var(--text-secondary)]">
-            <Clock className="h-4 w-4 text-[var(--green)]" />
-            <span>Typical verification time: <strong className="text-[var(--text)]">5–15 minutes</strong></span>
+        <div className="mb-8 rounded-xl border border-gray-200 bg-gray-50 p-5">
+          <div className="flex items-center justify-center gap-2 text-sm text-gray-600">
+            <Clock className="h-4 w-4 text-blue-600" />
+            <span>Typical verification time: <strong>5–15 minutes</strong></span>
           </div>
-          <p className="mt-2 text-xs text-[var(--text-muted)]">
+          <p className="mt-2 text-xs text-gray-400">
             During business hours (8 AM – 10 PM PHT)
           </p>
         </div>
@@ -43,7 +43,7 @@ export default function DonePage() {
             href={MESSENGER.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex w-full items-center justify-center gap-2.5 rounded-full bg-[var(--blue-messenger)] px-8 py-4 text-base font-bold text-white shadow-[0_4px_16px_rgba(0,132,255,0.2)] transition-all hover:bg-[#0070e0]"
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-blue-600 px-8 py-3.5 text-base font-semibold text-white hover:bg-blue-700 transition-colors"
           >
             <MessageCircle className="h-5 w-5" />
             Open Messenger
@@ -51,24 +51,24 @@ export default function DonePage() {
 
           <Link
             href="/"
-            className="block text-sm text-[var(--text-muted)] transition-colors hover:text-[var(--text)]"
+            className="block text-sm text-gray-500 hover:text-gray-700 transition-colors"
           >
             Back to Home
           </Link>
         </div>
 
-        <div className="mt-12 rounded-[14px] border border-[rgba(22,163,74,0.15)] bg-[var(--green-bg)] p-5">
-          <h3 className="mb-2 text-sm font-bold text-[var(--green)]">
+        <div className="mt-12 rounded-xl border border-blue-100 bg-blue-50 p-5">
+          <h3 className="mb-2 text-sm font-semibold text-blue-900">
             Haven&rsquo;t messaged us yet?
           </h3>
-          <p className="text-xs text-[var(--text-muted)]">
+          <p className="text-xs text-blue-700">
             Make sure to send your payment screenshot on Messenger so we can verify and send your kit.
           </p>
         </div>
       </main>
 
-      <footer className="px-5 py-6 text-center">
-        <p className="text-[0.75rem] text-[var(--text-muted)]">
+      <footer className="border-t border-gray-100 px-4 py-6">
+        <p className="text-center text-xs text-gray-400">
           &copy; {new Date().getFullYear()} {SITE.name}. All rights reserved.
         </p>
       </footer>

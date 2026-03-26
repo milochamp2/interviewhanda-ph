@@ -6,7 +6,7 @@
 export const SITE = {
   name: "InterviewHanda PH",
   tagline: "Ace Your Next Job Interview",
-  url: "https://interviewhanda-ph.vercel.app",
+  url: "https://interviewhanda.ph",
 } as const;
 
 export const PRICE = {
@@ -16,81 +16,75 @@ export const PRICE = {
 } as const;
 
 export const MESSENGER = {
-  /** Facebook Page Messenger URL — replace YOUR_PAGE_ID with actual page */
-  url: "https://m.me/YOUR_PAGE_ID",
-  /** Prefilled message sent after category selection */
-  prefill: (job: string) =>
-    `Hi! I'd like to get the InterviewHanda kit for: ${job}`,
-  /** Prefilled message sent after payment */
-  paidPrefill: (job: string, ref: string) =>
+  /** Facebook Page Messenger URL — update with your real page */
+  url: "https://m.me/interviewhanda",
+  /** Prefilled message sent after "I've Paid" */
+  prefill: (job: string, ref: string) =>
     `Hi! I just paid ₱249 for InterviewHanda PH.\nJob: ${job}\nRef: ${ref}`,
 } as const;
 
 export const PAYMENT = {
+  /** GCash QR code image path (place in /public) */
   gcashQr: "/images/gcash-qr.png",
+  /** Maya QR code image path (place in /public) */
   mayaQr: "/images/maya-qr.png",
+  /** GCash account name shown below QR */
   gcashName: "InterviewHanda PH",
+  /** Maya account name shown below QR */
   mayaName: "InterviewHanda PH",
+  /** GCash number */
   gcashNumber: "0917-XXX-XXXX",
+  /** Maya number */
   mayaNumber: "0917-XXX-XXXX",
 } as const;
 
 export interface JobCategory {
   id: string;
   label: string;
-  emoji: string;
+  icon: string;
 }
 
 export const JOB_CATEGORIES: JobCategory[] = [
-  { id: "bpo", label: "Customer Service / BPO", emoji: "🎧" },
-  { id: "va", label: "Virtual Assistant", emoji: "💻" },
-  { id: "admin", label: "Admin Assistant", emoji: "📋" },
-  { id: "sales", label: "Sales / Retail", emoji: "🛍️" },
-  { id: "service-crew", label: "Service Crew", emoji: "🍽️" },
-  { id: "nurse", label: "Nurse / Healthcare", emoji: "🏥" },
-  { id: "teacher", label: "Teacher / ESL", emoji: "📚" },
-  { id: "tech", label: "Tech / Developer", emoji: "⚙️" },
-  { id: "others", label: "Others", emoji: "✨" },
-];
-
-export const KIT_CONTENTS = [
-  {
-    title: "15 Tailored Interview Questions & Sample Answers",
-    description: "Real questions Filipino employers ask — with strong, proven answers.",
-  },
-  {
-    title: "Recruiter Traps & How to Dodge Them",
-    description: "Know the trick questions before they catch you off guard.",
-  },
-  {
-    title: "Job-Specific Interview Tips",
-    description: "Tips tailored to your exact job category.",
-  },
-  {
-    title: "Resume Improvement Suggestions",
-    description: "Quick fixes to make your resume stand out.",
-  },
-  {
-    title: "Cover Letter Template + Salary Script",
-    description: "Ready-to-use templates for applications and salary talks.",
-  },
-  {
-    title: "7-Day Practice Guide",
-    description: "Day-by-day plan so you're 100% ready by interview day.",
-  },
+  { id: "bpo", label: "Customer Service / BPO", icon: "Headset" },
+  { id: "va", label: "Virtual Assistant", icon: "Laptop" },
+  { id: "admin", label: "Admin Assistant", icon: "ClipboardList" },
+  { id: "sales", label: "Sales / Retail", icon: "ShoppingBag" },
+  { id: "service-crew", label: "Service Crew", icon: "UtensilsCrossed" },
+  { id: "nurse", label: "Nurse / Healthcare", icon: "HeartPulse" },
+  { id: "teacher", label: "Teacher / ESL", icon: "BookOpen" },
+  { id: "tech", label: "Tech / Developer", icon: "Code" },
+  { id: "others", label: "Others", icon: "PlusCircle" },
 ] as const;
 
-export const PRICE_FEATURES = [
-  "15 tailored Q&As for your job",
-  "Recruiter traps + job tips",
-  "Resume, cover letter & salary templates",
+export const TEASER_QUESTIONS: { question: string; locked?: boolean }[] = [
+  { question: "Tell me about yourself." },
+  { question: "Why do you want to work here?" },
+  { question: "What are your strengths and weaknesses?" },
+  { question: "Where do you see yourself in 5 years?" },
+  { question: "Why should we hire you?" },
+  { question: "Describe a time you handled a difficult situation." },
+  { question: "What motivates you at work?" },
+  { question: "Do you have any questions for us?" },
+  { question: "How do you handle pressure or stress?", locked: true },
+  { question: "What is your expected salary?", locked: true },
+  { question: "Tell me about a time you failed.", locked: true },
+  { question: "How do you prioritize your tasks?", locked: true },
+  { question: "Why did you leave your last job?", locked: true },
+];
+
+export const WHATS_INSIDE = [
+  "15 tailored interview questions & strong sample answers",
+  "Recruiter traps to watch out for",
+  "Interview tips specific to your job category",
+  "Resume improvement suggestions",
+  "Cover letter template",
+  "Salary negotiation script",
   "7-day practice guide",
-  "Instant delivery via Google Drive",
 ] as const;
 
 export const TRUST_ITEMS = [
   { stat: "2,400+", label: "Kits Delivered" },
-  { stat: "4.9/5", label: "Rating" },
+  { stat: "4.9/5", label: "Average Rating" },
   { stat: "93%", label: "Got Callbacks" },
 ] as const;
 
@@ -112,55 +106,47 @@ export const TESTIMONIALS = [
   },
 ] as const;
 
-export const PAYMENT_BADGES = [
-  { emoji: "🟢", label: "GCash" },
-  { emoji: "🟣", label: "Maya" },
-  { emoji: "🔒", label: "Secure" },
-  { emoji: "⚡", label: "Instant" },
-  { emoji: "📁", label: "Google Drive" },
-] as const;
-
 export const FAQ_ITEMS = [
   {
     q: "What do I get for ₱249?",
-    a: "A complete interview prep kit: 15 tailored Q&As, recruiter trap warnings, job-specific tips, resume suggestions, cover letter template, salary negotiation script, and a 7-day practice guide.",
+    a: "You get a complete interview prep kit: 15 tailored questions with expert answers, tips, recruiter traps, resume suggestions, cover letter, salary script, and a 7-day practice guide — all specific to your job category.",
   },
   {
     q: "How do I receive the kit?",
-    a: "After payment, message us on Messenger with your receipt and job category. We'll send your Google Drive link — usually within minutes.",
+    a: "After payment, message us on Messenger. We'll verify your payment and send a Google Drive link with all your materials within minutes.",
   },
   {
     q: "What payment methods do you accept?",
-    a: "GCash and Maya. Scan the QR code and send us a screenshot of your payment confirmation.",
+    a: "We accept GCash and Maya. Just scan the QR code, pay ₱249, and message us to confirm.",
   },
   {
-    q: "Gaano kabilis ko matatanggap?",
-    a: "Most kits are delivered within minutes. During peak hours, it may take up to a few hours.",
+    q: "How fast will I receive it?",
+    a: "Most orders are verified and delivered within 5–15 minutes during business hours (8 AM – 10 PM).",
   },
   {
     q: "Is it personalized to my job?",
-    a: "Yes! Each kit is tailored with industry-relevant questions, answers, and tips specific to your chosen job category.",
+    a: "Yes! You select your job category and we send you a kit tailored to that specific role.",
   },
   {
     q: "Can I get a refund?",
-    a: "Due to the digital nature of the product, refunds aren't available once the kit has been delivered. But we're confident you'll find it worth every peso.",
+    a: "Since this is a digital product delivered instantly, we don't offer refunds. But we guarantee you'll find it valuable!",
   },
 ] as const;
 
 export const HOW_IT_WORKS = [
   {
     step: 1,
-    title: "Pick your job category",
-    description: "Choose from 9 popular roles in the Philippines.",
+    title: "Pick Your Job",
+    description: "Choose from 9 popular job categories in the Philippines.",
   },
   {
     step: 2,
-    title: "Pay ₱249 via GCash or Maya",
-    description: "Scan the QR code. Screenshot your receipt.",
+    title: "Pay ₱249",
+    description: "Scan the GCash or Maya QR code. Quick and easy.",
   },
   {
     step: 3,
-    title: "Message us on Messenger",
-    description: "Send your category + receipt. We'll reply with your Google Drive link.",
+    title: "Get Your Kit",
+    description: "Message us on Messenger and receive your Google Drive link.",
   },
 ] as const;
