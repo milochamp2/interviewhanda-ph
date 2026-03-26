@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { AppProvider } from "@/components/providers";
-import { ThemeProvider } from "@/components/theme-provider";
-import { SmoothScrollProvider } from "@/components/smooth-scroll";
 import "./globals.css";
 
 const inter = Inter({
@@ -13,11 +11,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "InterviewHanda PH — Ace Your Next Job Interview",
   description:
-    "Get personalized interview questions, expert answers, and preparation tips tailored to your dream job in the Philippines.",
+    "Get a personalized interview prep kit for ₱249. Tailored questions, expert answers, and tips for your dream job in the Philippines.",
   openGraph: {
     title: "InterviewHanda PH",
     description:
-      "Personalized interview preparation for Filipino job seekers.",
+      "Personalized interview preparation for Filipino job seekers. ₱249 only.",
     type: "website",
   },
 };
@@ -26,7 +24,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#4f46e5",
+  themeColor: "#2563eb",
 };
 
 export default function RootLayout({
@@ -35,15 +33,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} font-sans antialiased grain-overlay`}>
-        <ThemeProvider>
-          <AppProvider>
-            <SmoothScrollProvider>
-              {children}
-            </SmoothScrollProvider>
-          </AppProvider>
-        </ThemeProvider>
+    <html lang="en">
+      <body className={`${inter.variable} font-sans antialiased`}>
+        <AppProvider>
+          {children}
+        </AppProvider>
       </body>
     </html>
   );
