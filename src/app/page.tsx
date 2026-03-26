@@ -260,6 +260,42 @@ export default function LandingPage() {
         {/* Trust / Social Proof */}
         <section className="section-divider px-4 py-12">
           <div className="mx-auto max-w-2xl">
+            {/* Golden Laurel Wreath Badge */}
+            <div className="mb-10 flex flex-col items-center">
+              <div className="relative mb-4">
+                {/* Laurel wreath SVG */}
+                <svg width="140" height="140" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-yellow-500">
+                  {/* Left branch */}
+                  <path d="M38 110C30 95 28 78 32 62C28 72 22 82 24 96C26 106 32 112 38 110Z" fill="currentColor" opacity="0.7"/>
+                  <path d="M42 100C36 88 34 74 37 60C34 68 28 77 30 89C32 98 37 103 42 100Z" fill="currentColor" opacity="0.6"/>
+                  <path d="M46 90C42 80 40 68 42 56C40 63 35 71 36 82C37 90 42 94 46 90Z" fill="currentColor" opacity="0.5"/>
+                  <path d="M50 82C47 73 46 63 47 52C46 58 42 65 42 75C43 82 47 86 50 82Z" fill="currentColor" opacity="0.5"/>
+                  <path d="M54 74C52 66 52 57 53 48C52 53 49 59 49 68C49 75 52 78 54 74Z" fill="currentColor" opacity="0.4"/>
+                  {/* Right branch (mirrored) */}
+                  <path d="M102 110C110 95 112 78 108 62C112 72 118 82 116 96C114 106 108 112 102 110Z" fill="currentColor" opacity="0.7"/>
+                  <path d="M98 100C104 88 106 74 103 60C106 68 112 77 110 89C108 98 103 103 98 100Z" fill="currentColor" opacity="0.6"/>
+                  <path d="M94 90C98 80 100 68 98 56C100 63 105 71 104 82C103 90 98 94 94 90Z" fill="currentColor" opacity="0.5"/>
+                  <path d="M90 82C93 73 94 63 93 52C94 58 98 65 98 75C97 82 93 86 90 82Z" fill="currentColor" opacity="0.5"/>
+                  <path d="M86 74C88 66 88 57 87 48C88 53 91 59 91 68C91 75 88 78 86 74Z" fill="currentColor" opacity="0.4"/>
+                  {/* Bottom ribbon */}
+                  <path d="M45 108L35 130L42 124L48 132L52 112Z" fill="currentColor" opacity="0.6"/>
+                  <path d="M95 108L105 130L98 124L92 132L88 112Z" fill="currentColor" opacity="0.6"/>
+                </svg>
+                {/* Center content */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-3xl font-extrabold text-yellow-600">4.9</span>
+                  <div className="flex gap-0.5 mt-0.5">
+                    {[...Array(5)].map((_, j) => (
+                      <Star key={j} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <span className="text-[10px] font-medium text-gray-500 mt-0.5">RATING</span>
+                </div>
+              </div>
+              <p className="text-sm font-semibold text-gray-700">Trusted by 2,400+ job seekers</p>
+            </div>
+
+            {/* Stats row */}
             <div className="mb-10 grid grid-cols-3 gap-4 text-center">
               {TRUST_ITEMS.map((item, i) => (
                 <div key={i}>
@@ -269,6 +305,7 @@ export default function LandingPage() {
               ))}
             </div>
 
+            {/* Testimonials */}
             <div className="space-y-4">
               {TESTIMONIALS.map((t, i) => (
                 <div key={i} className="rounded-xl border border-gray-200 bg-white p-5">
@@ -284,6 +321,78 @@ export default function LandingPage() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Infinite Payment Logos Marquee */}
+        <section className="overflow-hidden border-y border-gray-100 bg-gray-50 py-6">
+          <div className="marquee-track">
+            {[...Array(2)].map((_, setIdx) => (
+              <div key={setIdx} className="flex shrink-0 items-center gap-10 px-5">
+                {/* GCash */}
+                <div className="flex items-center gap-2 shrink-0">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="#007DFE"/>
+                    <text x="16" y="21" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" fontFamily="sans-serif">G</text>
+                  </svg>
+                  <span className="text-sm font-bold text-[#007DFE]">GCash</span>
+                </div>
+                {/* Maya */}
+                <div className="flex items-center gap-2 shrink-0">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="#00B274"/>
+                    <text x="16" y="21" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" fontFamily="sans-serif">M</text>
+                  </svg>
+                  <span className="text-sm font-bold text-[#00B274]">Maya</span>
+                </div>
+                {/* Secure Payment */}
+                <div className="flex items-center gap-2 shrink-0">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="#F3F4F6"/>
+                    <path d="M16 8L10 11V16C10 20.4 12.6 24.5 16 26C19.4 24.5 22 20.4 22 16V11L16 8Z" fill="#22C55E" opacity="0.9"/>
+                    <path d="M14 17L15.5 18.5L19 15" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <span className="text-sm font-semibold text-gray-600">Secure Payment</span>
+                </div>
+                {/* Instant Delivery */}
+                <div className="flex items-center gap-2 shrink-0">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="#F3F4F6"/>
+                    <path d="M17 9L12 18H16L15 23L20 14H16L17 9Z" fill="#F59E0B"/>
+                  </svg>
+                  <span className="text-sm font-semibold text-gray-600">Instant Delivery</span>
+                </div>
+                {/* Google Drive */}
+                <div className="flex items-center gap-2 shrink-0">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="#F3F4F6"/>
+                    <path d="M12 10L8 18H14L18 10H12Z" fill="#4285F4"/>
+                    <path d="M18 10L14 18L17 23H23L27 18H18Z" fill="#FBBC04" opacity="0.9"/>
+                    <path d="M8 18L11 23H17L14 18H8Z" fill="#34A853"/>
+                  </svg>
+                  <span className="text-sm font-semibold text-gray-600">Google Drive</span>
+                </div>
+                {/* Messenger */}
+                <div className="flex items-center gap-2 shrink-0">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="#F3F4F6"/>
+                    <path d="M16 8C11.6 8 8 11.2 8 15.2C8 17.4 9.1 19.3 10.8 20.6V24L14 22.2C14.6 22.4 15.3 22.5 16 22.5C20.4 22.5 24 19.3 24 15.2C24 11.2 20.4 8 16 8Z" fill="#0084FF"/>
+                    <path d="M12 16.5L15 13L17 16L20 13" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <span className="text-sm font-semibold text-gray-600">Messenger</span>
+                </div>
+                {/* No Account Needed */}
+                <div className="flex items-center gap-2 shrink-0">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="#F3F4F6"/>
+                    <circle cx="16" cy="14" r="4" fill="#6366F1" opacity="0.8"/>
+                    <path d="M10 24C10 20.7 12.7 18 16 18C19.3 18 22 20.7 22 24" stroke="#6366F1" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+                    <path d="M9 9L23 23" stroke="#EF4444" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                  <span className="text-sm font-semibold text-gray-600">No Account Needed</span>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
